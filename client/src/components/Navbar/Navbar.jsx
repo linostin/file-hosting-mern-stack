@@ -78,7 +78,7 @@ export default function Navbar() {
       </FormGroup>
       <AppBar position="static">
         <Toolbar className={classes.toolbar}>
-          {!auth && (
+          {!isAuth && (
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -89,7 +89,7 @@ export default function Navbar() {
             </IconButton>
           )}
 
-          {!auth && (
+          {!isAuth && (
             <div className={classes.appBarTypography}>
               <NavLink className={classes.navlink} to="/register">
                 <Typography variant="h6" className={classes.title}>
@@ -104,7 +104,7 @@ export default function Navbar() {
             </div>
           )}
 
-          {auth && (
+          {isAuth && (
             <div>
               <IconButton
                 aria-label="account of current user"

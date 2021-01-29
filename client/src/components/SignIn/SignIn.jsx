@@ -57,8 +57,8 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
 
   const onChangeValue = (event) => {
-    console.log("event onChange", event);
-    console.log("event onChangeID", event.target.id);
+    // console.log("event onChange", event);
+    // console.log("event onChangeID", event.target.id);
     switch (event.target.id) {
       case "email":
         setEmail(event.target.value);
