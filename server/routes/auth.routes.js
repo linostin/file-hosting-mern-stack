@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const router = Router();
 const authMiddleware = require('../middleware/auth.middleware')
+const fileService = require("../services/fileService")
+const File = require("../models/File")
 
 // /api/auth/register
 // регистрация пользователя
@@ -52,6 +54,8 @@ router.post(
 
       // ждем пока новый пользователь сохранится в базе данных
       await user.save();
+      // создаем директорию для пользователя
+      await fileService.createDir(new File({user: user.id, name: ''}))
       // после выводим сообщение об успешной регистрации
       res.status(201).json({ message: "Пользователь создан" });
     } catch (e) {
