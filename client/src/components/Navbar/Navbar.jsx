@@ -12,6 +12,8 @@ import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../reducers/userReducer"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,13 +35,17 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   navlink: {
-    textDecoration: 'none',
-    color: 'white'
-  }
+    textDecoration: "none",
+    color: "white",
+  },
 }));
 
 export default function Navbar() {
   const classes = useStyles();
+
+  const isAuth = useSelector((state) => state.user.isAuth);
+  const dispatch = useDispatch()
+
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -72,26 +78,31 @@ export default function Navbar() {
       </FormGroup>
       <AppBar position="static">
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <div className={classes.appBarTypography}>
-            <NavLink className={classes.navlink} to="/register">
-              <Typography variant="h6" className={classes.title}>
-                Регистрация
-              </Typography>
-            </NavLink>
-            <NavLink className={classes.navlink} to="/login">
-              <Typography variant="h6" className={classes.title}>
-                Войти
-              </Typography>
-            </NavLink>
-          </div>
+          {!auth && (
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+
+          {!auth && (
+            <div className={classes.appBarTypography}>
+              <NavLink className={classes.navlink} to="/register">
+                <Typography variant="h6" className={classes.title}>
+                  Регистрация
+                </Typography>
+              </NavLink>
+              <NavLink className={classes.navlink} to="/login">
+                <Typography variant="h6" className={classes.title}>
+                  Войти
+                </Typography>
+              </NavLink>
+            </div>
+          )}
 
           {auth && (
             <div>
@@ -104,6 +115,11 @@ export default function Navbar() {
               >
                 <AccountCircle />
               </IconButton>
+              
+                <Typography onClick={() => dispatch(logout())} variant="h6" className={classes.title}>
+                  Выйти
+                </Typography>
+              
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}

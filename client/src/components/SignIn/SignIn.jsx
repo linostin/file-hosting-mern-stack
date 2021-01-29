@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { login } from '../../actions/user'
+import { useDispatch } from "react-redux"
 
 function Copyright() {
   return (
@@ -49,6 +51,28 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onChangeValue = (event) => {
+    console.log("event onChange", event);
+    console.log("event onChangeID", event.target.id);
+    switch (event.target.id) {
+      case "email":
+        setEmail(event.target.value);
+        break;
+
+      case "password":
+        setPassword(event.target.value);
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -70,6 +94,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={onChangeValue}
           />
           <TextField
             variant="outlined"
@@ -81,17 +107,20 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={onChangeValue}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={() => dispatch(login(email, password))}
           >
             Sign In
           </Button>
