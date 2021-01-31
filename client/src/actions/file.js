@@ -11,39 +11,82 @@ export const getFiles = (dirId) => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-      console.log("file ACTION AXIOS getFiles", response)
+      console.log("file ACTION AXIOS getFiles", response);
       dispatch(setFiles(response.data));
     } catch (error) {
       console.log(error.response.data.message);
       console.log(error.response.data.errors);
-      console.log("FILE Error", error.response);
+      console.log("FILE Error - getFiles", error.response);
       // alert(error.response.data.mesage)
     }
   };
 };
-
 
 export const createDir = (dirId, name) => {
   // асинхронная функция, которая пареметром принимает dispatch
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/files', 
+        "http://localhost:5000/api/files",
         {
           name,
           parent: dirId,
-          type: 'dir'
+          type: "dir",
         },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-      console.log("file ACTION AXIOS createDir", response)
+      console.log("file ACTION AXIOS createDir", response);
       dispatch(addFile(response.data));
     } catch (error) {
       // console.log(error.response.data.message);
       // console.log(error.response.data.errors);
-      console.log("FILE Error", error.response);
+      console.log("FILE Error - createDir", error.response);
+      // alert(error.response.data.mesage)
+    }
+  };
+};
+
+export const uploadFile = (file, dirId) => {
+  // асинхронная функция, которая пареметром принимает dispatch
+  return async (dispatch) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("file", file);
+      if (dirId) {
+        formData.append("parent", dirId);
+      }
+
+      const response = await axios.post(
+        "http://localhost:5000/api/files/upload",
+        formData,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader("content-length") ||
+                progressEvent.target.getResponseHeader(
+                  "x-decompressed-content-length"
+                );
+            console.log("total", totalLength);
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength
+              );
+              console.log(progress);
+            }
+          },
+        }
+      );
+      console.log("file ACTION AXIOS createDir", response);
+      dispatch(addFile(response.data));
+    } catch (error) {
+      // console.log(error.response.data.message);
+      // console.log(error.response.data.errors);
+      console.log("FILE Error - uploadFile", error.response);
       // alert(error.response.data.mesage)
     }
   };

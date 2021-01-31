@@ -1,6 +1,9 @@
 const fileService = require("../services/fileService");
 const User = require("../models/User");
 const File = require("../models/File");
+const config = require("config");
+const fs = require("fs");
+const { use } = require("../routes/auth.routes");
 
 class FileController {
   async createDir(req, res) {
@@ -29,7 +32,9 @@ class FileController {
       // и возвращаем его в ответе от сервера
       return res.json(file);
     } catch (error) {
-      return res.status(400).json({errors: error.message, message: "Can not create files"});
+      return res
+        .status(400)
+        .json({ errors: error.message, message: "Can not create files" });
     }
   }
 
@@ -41,7 +46,77 @@ class FileController {
       });
       return res.json(files);
     } catch (error) {
-      return res.status(500).json({errors: error.message, message: "Can not get files" });
+      return res
+        .status(500)
+        .json({ errors: error.message, message: "Can not get files" });
+    }
+  }
+
+  async uploadFile(req, res) {
+    try {
+      // получаем файл из запроса
+      const file = req.files.file;
+      // находим родительскую директорорию в которую будем сохранять файл
+      // ищем по id пользователя, который мы достаем из токена и по id директорории из тела запроса
+      const parent = await File.findOne({
+        user: req.user.id,
+        _id: req.body.parent,
+      });
+      // ищем пользователя, чтобы проверить свободное место у него
+      const user = await User.findOne({ _id: req.user.id });
+
+      if (user.usedSpace + file.size > user.diskSpace) {
+        return res
+          .status(400)
+          .json({
+            errors: error.message,
+            message: "No free space on the disk",
+          });
+      }
+
+      user.usedSpace = user.usedSpace + file.size;
+
+      let path;
+      if (parent) {
+        path = `${config.get("filePath")}\\${user._id}\\${parent.path}\\${
+          file.name
+        }`;
+      } else {
+        path = `${config.get("filePath")}\\${user._id}\\${file.name}`;
+      }
+
+      // проверяем есть ли файл по данному пути
+      if (fs.existsSync(path)) {
+        return res
+          .status(400)
+          .json({ errors: error.message, message: "File already exist" });
+      }
+
+      // перемещаем файл по ранне созданному пути
+      file.mv(path);
+
+      // получаем тип файла
+      const type = file.name.split(".").pop();
+
+      const dbFile = new File({
+        name: file.name,
+        type,
+        size: file.size,
+        // path: parent?.path,
+        // parent: parent?._id,
+        path: parent.path,
+        parent: parent._id,
+        user: user._id,
+      });
+
+      await dbFile.save();
+      await user.save();
+
+      res.json(dbFile);
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ errors: error.message, message: "Upload error" });
     }
   }
 }

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFiles, createDir } from "../../actions/file";
+import { getFiles, createDir, uploadFile } from "../../actions/file";
 import { setCurrentDir, pushToStack } from '../../reducers/fileReducer'
 import FileList from "./FileList/FileList";
 import Popup from "./Popup/Popup";
+import UploadButton from './UploadButton/UploadButton'
 
 function Disk() {
   const dispatch = useDispatch();
@@ -46,6 +47,11 @@ function Disk() {
     dispatch(createDir(currentDir, dirName));
   };
 
+  const fileUploadFunc = (inputFiles) => {
+    const files = [...inputFiles]
+    files.forEach(file => dispatch(uploadFile(file, currentDir)))
+  }
+
   return (
     <div className="disk">
       <div className="disk__btns">
@@ -56,6 +62,7 @@ function Disk() {
         <button className="disk__create" onClick={() => popupOpenFunc()}>
           Тест popup
         </button>
+        <UploadButton fileUploadFunc={fileUploadFunc}/>
       </div>
       <FileList filesList={filesList} openFolderFunc={openFolderFunc} />
       <Popup
