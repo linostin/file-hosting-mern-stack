@@ -66,12 +66,10 @@ class FileController {
       const user = await User.findOne({ _id: req.user.id });
 
       if (user.usedSpace + file.size > user.diskSpace) {
-        return res
-          .status(400)
-          .json({
-            errors: error.message,
-            message: "No free space on the disk",
-          });
+        return res.status(400).json({
+          errors: error.message,
+          message: "No free space on the disk",
+        });
       }
 
       user.usedSpace = user.usedSpace + file.size;
@@ -117,6 +115,39 @@ class FileController {
       return res
         .status(500)
         .json({ errors: error.message, message: "Upload error" });
+    }
+  }
+
+  async downLoadFile(req, res) {
+    try {
+      const file = await File.findOne({
+        _id: req.query.id,
+        user: req.user.id,
+      });
+
+      const path =
+        config.get("filePath") +
+        "\\" +
+        req.user.id +
+        "\\" +
+        file.path +
+        "\\" +
+        file.name;
+
+      if (fs.existsSync(path)) {
+        return res.download(path, file.name);
+      }
+
+      return res
+        .status(400)
+        .json({
+          errors: error.message,
+          message: "File not found, download error",
+        });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ errors: error.message, message: "Download error" });
     }
   }
 }
