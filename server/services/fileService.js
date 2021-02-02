@@ -6,6 +6,9 @@ class FileService {
   createDir(file) {
     const filePath = `${config.get("filePath")}\\${file.user}\\${file.path}`;
 
+    console.log('file.path', file.path)
+    console.log("File path", filePath)
+
     return new Promise((resolve, reject) => {
       try {
         //если файл существует по такому пути то
@@ -21,6 +24,24 @@ class FileService {
         return reject({ errors: error.message, message: "File error" });
       }
     });
+  }
+
+  deleteFile(file) {
+    const filePath = this.getPath(file)
+
+    console.log("path", filePath)
+    console.log('"file.type', file.type)
+    console.log('file.path', file.path)
+
+    if (file.type === 'dir') {
+      fs.rmdirSync(filePath)
+    } else {
+      fs.unlinkSync(filePath)
+    }
+  }
+  
+  getPath(file) {
+    return config.get('filePath') + '\\' + file.user + '\\' + file.path
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFiles, createDir, uploadFile, downloadFile } from "../../actions/file";
+import { getFiles, createDir, uploadFile, downloadFile, deleteFile } from "../../actions/file";
 import { setCurrentDir, pushToStack } from '../../reducers/fileReducer'
 import FileList from "./FileList/FileList";
 import Popup from "./Popup/Popup";
@@ -77,7 +77,12 @@ function Disk() {
 
   const downloadLoadClickHandler = (event, file) => {
     event.stopPropagation()
-    downloadFile(file)
+    dispatch(downloadFile(file))
+  }
+
+  const deleteFileClickHandler = (event, file) => {
+    event.stopPropagation()
+    dispatch(deleteFile(file))
   }
 
   return ( !dragDropEnter ?
@@ -92,7 +97,7 @@ function Disk() {
         </button>
         <UploadButton fileUploadFunc={fileUploadFunc}/>
       </div>
-      <FileList filesList={filesList} openFolderFunc={openFolderFunc} downloadLoadClickHandler={downloadLoadClickHandler}/>
+      <FileList filesList={filesList} openFolderFunc={openFolderFunc} downloadLoadClickHandler={downloadLoadClickHandler} deleteFileClickHandler={deleteFileClickHandler}/>
       <Popup
         popupOpen={popupOpen}
         popupCloseFunc={popupCloseFunc}

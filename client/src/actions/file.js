@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setFiles, addFile } from "../reducers/fileReducer";
+import { setFiles, addFile, deleteFileAction } from "../reducers/fileReducer";
 
 export const getFiles = (dirId) => {
   // асинхронная функция, которая пареметром принимает dispatch
@@ -81,7 +81,7 @@ export const uploadFile = (file, dirId) => {
           },
         }
       );
-      console.log("file ACTION AXIOS createDir", response);
+      console.log("file ACTION AXIOS uploadFile", response);
       dispatch(addFile(response.data));
     } catch (error) {
       // console.log(error.response.data.message);
@@ -114,4 +114,24 @@ export async function downloadFile(file) {
 }
   
 
+export const deleteFile = (file) => {
+  // асинхронная функция, которая пареметром принимает dispatch
+  return async (dispatch) => {
+    try {
+
+      const response = await axios.delete(`http://localhost:5000/api/files?id=${file._id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+
+      console.log("file ACTION AXIOS deleteFile", response);
+      dispatch(deleteFileAction(file._id));
+      alert.response.data.message()
+    } catch (error) {
+      // console.log(error.response.data.message);
+      // console.log(error.response.data.errors);
+      console.log("FILE Error - deleteFile", error.response);
+      // alert(error.response.data.mesage)
+    }
+  };
+};
     

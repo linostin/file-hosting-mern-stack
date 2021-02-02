@@ -137,7 +137,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected, downloadLoadClickHandler, rowCheckboxSelected } = props;
+  const { numSelected, downloadLoadClickHandler, rowCheckboxSelected, deleteFileClickHandler } = props;
 
   return (
     <Toolbar
@@ -173,7 +173,7 @@ const EnhancedTableToolbar = (props) => {
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete">
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={(event) => deleteFileClickHandler(event, rowCheckboxSelected)}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
@@ -217,7 +217,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FileList({ filesList, openFolderFunc, downloadLoadClickHandler }) {
+export default function FileList({ filesList, openFolderFunc, downloadLoadClickHandler, deleteFileClickHandler }) {
   // console.log("FILELIST", filesList)
 
   const classes = useStyles();
@@ -290,7 +290,7 @@ export default function FileList({ filesList, openFolderFunc, downloadLoadClickH
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} downloadLoadClickHandler={downloadLoadClickHandler} rowCheckboxSelected={rowCheckboxSelected}/>
+        <EnhancedTableToolbar numSelected={selected.length} downloadLoadClickHandler={downloadLoadClickHandler} rowCheckboxSelected={rowCheckboxSelected} deleteFileClickHandler={deleteFileClickHandler}/>
         <TableContainer>
           <Table
             className={classes.table}

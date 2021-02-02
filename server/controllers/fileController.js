@@ -53,6 +53,7 @@ class FileController {
   }
 
   async uploadFile(req, res) {
+
     try {
       // получаем файл из запроса
       const file = req.files.file;
@@ -62,6 +63,7 @@ class FileController {
         user: req.user.id,
         _id: req.body.parent,
       });
+
       // ищем пользователя, чтобы проверить свободное место у него
       const user = await User.findOne({ _id: req.user.id });
 
@@ -96,14 +98,24 @@ class FileController {
       // получаем тип файла
       const type = file.name.split(".").pop();
 
+      let filePath = file.name
+      if (parent) {
+        filePath = parent.path + '\\' + file.name 
+      }
+
+      let parentId = parent
+      if (parent) {
+        parentId = parent_id;
+      }
+
       const dbFile = new File({
         name: file.name,
         type,
         size: file.size,
         // path: parent?.path,
         // parent: parent?._id,
-        path: parent.path,
-        parent: parent._id,
+        path: filePath.path,
+        parent: parentId, 
         user: user._id,
       });
 
@@ -150,6 +162,42 @@ class FileController {
         .json({ errors: error.message, message: "Download error" });
     }
   }
+
+
+  async deleteFile(req, res) {
+    try {
+      const file = await File.findOne({
+        _id: req.query.id,
+        user: req.user.id,
+      });
+
+      if (!file) {
+        return res
+        .status(400)
+        .json({
+          errors: error.message,
+          message: "File not found",
+        });
+      }
+
+      console.log("file", file)
+
+      // удаляем файл физически с сервера
+      fileService.deleteFile(file)
+      // удаляем модель файла из базы данных
+      await file.remove()
+
+      return res
+        .json({ errors: error.message, message: "File was deleted" });
+
+      
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ errors: error.message, message: "Delete error" });
+    }
+  }
+
 }
 
 module.exports = new FileController();
