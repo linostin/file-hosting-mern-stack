@@ -57,6 +57,7 @@ class FileController {
     try {
       // получаем файл из запроса
       const file = req.files.file;
+
       // находим родительскую директорорию в которую будем сохранять файл
       // ищем по id пользователя, который мы достаем из токена и по id директорории из тела запроса
       const parent = await File.findOne({
@@ -114,7 +115,7 @@ class FileController {
         size: file.size,
         // path: parent?.path,
         // parent: parent?._id,
-        path: filePath.path,
+        path: filePath,
         parent: parentId, 
         user: user._id,
       });
@@ -180,7 +181,7 @@ class FileController {
         });
       }
 
-      console.log("file", file)
+      console.log("file delete", file)
 
       // удаляем файл физически с сервера
       fileService.deleteFile(file)
@@ -188,7 +189,7 @@ class FileController {
       await file.remove()
 
       return res
-        .json({ errors: error.message, message: "File was deleted" });
+        .json({ message: "File was deleted" });
 
       
     } catch (error) {
