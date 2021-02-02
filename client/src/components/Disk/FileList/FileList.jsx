@@ -137,7 +137,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, downloadLoadClickHandler, rowCheckboxSelected } = props;
 
   return (
     <Toolbar
@@ -168,7 +168,7 @@ const EnhancedTableToolbar = (props) => {
       {numSelected > 0 ? (
         <>
           <Tooltip title="Download">
-            <IconButton aria-label="download">
+            <IconButton aria-label="download" onClick={(event) => downloadLoadClickHandler(event, rowCheckboxSelected)}>
               <GetAppIcon />
             </IconButton>
           </Tooltip>
@@ -217,7 +217,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FileList({ filesList, openFolderFunc }) {
+export default function FileList({ filesList, openFolderFunc, downloadLoadClickHandler }) {
   // console.log("FILELIST", filesList)
 
   const classes = useStyles();
@@ -227,6 +227,7 @@ export default function FileList({ filesList, openFolderFunc }) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowCheckboxSelected, setRowCheckboxSelected] = React.useState()
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -247,7 +248,7 @@ export default function FileList({ filesList, openFolderFunc }) {
     openFolderFunc(name, id, type);
   };
 
-  const handleClick = (event, name) => {
+  const handleClick = (event, name, row) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
@@ -265,6 +266,7 @@ export default function FileList({ filesList, openFolderFunc }) {
     }
 
     setSelected(newSelected);
+    setRowCheckboxSelected(row)
   };
 
   const handleChangePage = (event, newPage) => {
@@ -288,7 +290,7 @@ export default function FileList({ filesList, openFolderFunc }) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} downloadLoadClickHandler={downloadLoadClickHandler} rowCheckboxSelected={rowCheckboxSelected}/>
         <TableContainer>
           <Table
             className={classes.table}
@@ -325,7 +327,7 @@ export default function FileList({ filesList, openFolderFunc }) {
                       selected={isItemSelected}
                     >
                       <TableCell
-                        onClick={(event) => handleClick(event, row.name)}
+                        onClick={(event) => handleClick(event, row.name, row)}
                         padding="checkbox"
                       >
                         <Checkbox
