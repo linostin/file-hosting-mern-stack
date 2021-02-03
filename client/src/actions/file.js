@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setFiles, addFile, deleteFileAction } from "../reducers/fileReducer";
+import {addUploadFile, changeUploadFile, showUploader} from "../reducers/uploadReducer";
 
 export const getFiles = (dirId) => {
   // асинхронная функция, которая пареметром принимает dispatch
@@ -59,6 +60,10 @@ export const uploadFile = (file, dirId) => {
         formData.append("parent", dirId);
       }
 
+      const uploadFile = {name: file.name, progress: 0, id: Date.now()}
+      dispatch(showUploader())
+      dispatch(addUploadFile(uploadFile))
+
       const response = await axios.post(
         "http://localhost:5000/api/files/upload",
         formData,
@@ -71,12 +76,10 @@ export const uploadFile = (file, dirId) => {
                 progressEvent.target.getResponseHeader(
                   "x-decompressed-content-length"
                 );
-            console.log("total", totalLength);
+            
             if (totalLength) {
-              let progress = Math.round(
-                (progressEvent.loaded * 100) / totalLength
-              );
-              console.log(progress);
+              uploadFile.progress = Math.round((progressEvent.loaded * 100) / totalLength)
+              dispatch(changeUploadFile(uploadFile))
             }
           },
         }

@@ -5,6 +5,7 @@ import { setCurrentDir, pushToStack } from '../../reducers/fileReducer'
 import FileList from "./FileList/FileList";
 import Popup from "./Popup/Popup";
 import UploadButton from './UploadButton/UploadButton'
+import Uploader from './Uploader/Uploader'
 
 import "./Styles/style.css"
 
@@ -103,6 +104,7 @@ function Disk() {
         popupCloseFunc={popupCloseFunc}
         createDirHandler={createDirHandler}
       />
+      <Uploader/>
     </div>
     :
     <div className="drag__and__drop" onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
