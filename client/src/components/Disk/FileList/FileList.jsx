@@ -21,6 +21,7 @@ import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import FilterListIcon from "@material-ui/icons/FilterList";
+import sizeFormat from '../../../utils/sizeFormat'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -344,7 +345,7 @@ export default function FileList({ filesList, openFolderFunc, downloadLoadClickH
                         {row.name}
                       </TableCell>
                       <TableCell align="right">{row.date}</TableCell>
-                      <TableCell align="right">{row.size}</TableCell>
+                      <TableCell align="right">{sizeFormat(row.size)}</TableCell>
                     </TableRow>
                   );
                 })}

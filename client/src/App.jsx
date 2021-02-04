@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn/SignIn";
 import { useSelector, useDispatch } from "react-redux";
 import { auth } from "./actions/user";
 import Disk from "./components/Disk/Disk";
+import MenuTop from './components/MenuTop/MenuTop'
 
 function App() {
   const isAuth = useSelector((state) => state.user.isAuth);
@@ -20,6 +21,7 @@ function App() {
     <BrowserRouter>
       <div>
         <Navbar />
+        <MenuTop/>
         {!isAuth ? (
           <Switch>
             <Route path="/register" component={SignUp} />
