@@ -3,14 +3,22 @@ import styled from "styled-components";
 export const MenuTopContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   width: 100%;
   min-height: 50px;
-  border: 4px double black;
+  border-bottom: 1px solid #edebe9;
 `;
 
-export const MenuTopButtonWrapper = styled.div`
+export const MenuTopButtonsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+export const MenuTopButtonIcon = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 10px;
 `;

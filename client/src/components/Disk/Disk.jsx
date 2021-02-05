@@ -12,12 +12,15 @@ import FileList from "./FileList/FileList";
 import Popup from "./Popup/Popup";
 import UploadButton from "./UploadButton/UploadButton";
 import Uploader from "./Uploader/Uploader";
+import MenuTop from '../MenuTop/MenuTop'
 
 import "./Styles/style.css";
 
 function Disk() {
   const dispatch = useDispatch();
 
+  const [checkboxSelectedFiles, setCheckboxSelectedFiles] = useState([])
+  const [openMenuTop, setOpenMenuTop] =useState(false)
   const [popupOpen, setPopupOpen] = useState(false);
   const [dragDropEnter, setDragDropEnter] = useState(false);
 
@@ -92,6 +95,14 @@ function Disk() {
     dispatch(deleteFile(file));
   };
 
+  const menuTopHandler = (status) => {
+    setOpenMenuTop(status)
+  }
+
+  const checkboxSelectedFilesHandler = (selected) => {
+    setCheckboxSelectedFiles(selected)
+  }
+
   return (
     <div
       className="disk"
@@ -99,6 +110,7 @@ function Disk() {
       onDragLeave={dragLeaveHandler}
       onDragOver={dragEnterHandler}
     >
+      <MenuTop checkboxSelectedFiles={checkboxSelectedFiles.length} checkboxSelectedFilesHandler={checkboxSelectedFilesHandler} openMenuTop={openMenuTop}/>
       <div className="disk__btns">
         <button className="disk__back" onClick={backFolderFunc}>
           Назад
@@ -111,7 +123,7 @@ function Disk() {
         </button>
         <UploadButton fileUploadFunc={fileUploadFunc} />
       </div>
-      {/* <FileList filesList={filesList} openFolderFunc={openFolderFunc} downloadLoadClickHandler={downloadLoadClickHandler} deleteFileClickHandler={deleteFileClickHandler}/> */}
+      <FileList filesList={filesList} checkboxSelectedFilesHandler={checkboxSelectedFilesHandler} menuTopHandler={menuTopHandler} openFolderFunc={openFolderFunc} downloadLoadClickHandler={downloadLoadClickHandler} deleteFileClickHandler={deleteFileClickHandler}/>
       <Popup
         popupOpen={popupOpen}
         popupCloseFunc={popupCloseFunc}

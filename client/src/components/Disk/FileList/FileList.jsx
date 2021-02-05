@@ -218,7 +218,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FileList({ filesList, openFolderFunc, downloadLoadClickHandler, deleteFileClickHandler }) {
+export default function FileList({ filesList, checkboxSelectedFilesHandler, menuTopHandler, openFolderFunc, downloadLoadClickHandler, deleteFileClickHandler }) {
   // console.log("FILELIST", filesList)
 
   const classes = useStyles();
@@ -268,6 +268,8 @@ export default function FileList({ filesList, openFolderFunc, downloadLoadClickH
 
     setSelected(newSelected);
     setRowCheckboxSelected(row)
+    menuTopHandler(true)
+    checkboxSelectedFilesHandler(newSelected)
   };
 
   const handleChangePage = (event, newPage) => {
