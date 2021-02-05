@@ -4,7 +4,6 @@ import {
   MenuTopButtonsWrapper,
   MenuTopButtonIcon,
 } from "./styled";
-import { menuTopData } from "./index";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -15,8 +14,10 @@ const MenuTop = ({
   checkboxSelectedFiles,
   checkboxSelectedFilesHandler,
   openMenuTop,
+  backFolderFunc,
+  popupOpenFunc,
+  fileUploadFunc,
 }) => {
-  console.log(menuTopData.buttons);
 
   const [closeButton, setCloseButton] = useState(true);
 
@@ -52,9 +53,9 @@ const MenuTop = ({
     return (
       <MenuTopContainer>
         <MenuTopButtonsWrapper>
-          <MenuTopButtons type='back'/>
-          <MenuTopButtons type='create'/>
-          <MenuTopButtons type='upload'/>
+          <MenuTopButtons type='back'func={backFolderFunc}/>
+          <MenuTopButtons type='create'func={popupOpenFunc}/>
+          <MenuTopButtons type='upload'func={fileUploadFunc}/>
         </MenuTopButtonsWrapper>
       </MenuTopContainer>
     );

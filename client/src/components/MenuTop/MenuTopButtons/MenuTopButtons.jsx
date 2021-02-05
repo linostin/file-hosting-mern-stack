@@ -1,24 +1,23 @@
 import React from "react";
-import {
-  MenuTopButtonIcon,
-} from "../styled";
+import { MenuTopButtonIcon } from "../styled";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ShareIcon from "@material-ui/icons/Share";
 import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder";
 import PublishIcon from "@material-ui/icons/Publish";
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import Button from "@material-ui/core/Button";
 
-const getButtonIcon = (type, name) => {
-
+const getButtonIcon = (type, name, func) => {
   switch (type) {
     case "download":
       return (
         <MenuTopButtonIcon>
           <GetAppIcon fontSize="small" />
-          <Button size="small">{name ? name : "Скачать"}</Button>
+          <Button size="small" onClick={func}>
+            {name ? name : "Скачать"}
+          </Button>
         </MenuTopButtonIcon>
       );
 
@@ -26,7 +25,9 @@ const getButtonIcon = (type, name) => {
       return (
         <MenuTopButtonIcon>
           <DeleteIcon fontSize="small" />
-          <Button size="small">{name ? name : "Удалить"}</Button>
+          <Button size="small" onClick={func}>
+            {name ? name : "Удалить"}
+          </Button>
         </MenuTopButtonIcon>
       );
 
@@ -34,7 +35,9 @@ const getButtonIcon = (type, name) => {
       return (
         <MenuTopButtonIcon>
           <EditIcon fontSize="small" />
-          <Button size="small">{name ? name : "Переименовать"}</Button>
+          <Button size="small" onClick={func}>
+            {name ? name : "Переименовать"}
+          </Button>
         </MenuTopButtonIcon>
       );
 
@@ -42,7 +45,9 @@ const getButtonIcon = (type, name) => {
       return (
         <MenuTopButtonIcon>
           <ShareIcon fontSize="small" />
-          <Button size="small">{name ? name : "Дать доступ"}</Button>
+          <Button size="small" onClick={func}>
+            {name ? name : "Дать доступ"}
+          </Button>
         </MenuTopButtonIcon>
       );
 
@@ -50,7 +55,9 @@ const getButtonIcon = (type, name) => {
       return (
         <MenuTopButtonIcon>
           <CreateNewFolderIcon fontSize="small" />
-          <Button size="small">{name ? name : "Создать папку"}</Button>
+          <Button size="small" onClick={func}>
+            {name ? name : "Создать папку"}
+          </Button>
         </MenuTopButtonIcon>
       );
 
@@ -58,25 +65,39 @@ const getButtonIcon = (type, name) => {
       return (
         <MenuTopButtonIcon>
           <PublishIcon fontSize="small" />
-          <Button size="small">{name ? name : "Загрузить"}</Button>
+          <input
+            // accept="image/*"
+            style={{display: 'none'}}
+            id="upload-button-file"
+            multiple
+            type="file"
+            onChange={(event) => func(event.target.files)}
+          />
+          <label htmlFor="upload-button-file">
+            <Button size="small" component="span">
+              {name ? name : "Загрузить"}
+            </Button>
+          </label>
         </MenuTopButtonIcon>
       );
 
-      case "back":
-        return (
-          <MenuTopButtonIcon>
-            <KeyboardBackspaceIcon fontSize="small" />
-            <Button size="small">{name ? name : "Назад"}</Button>
-          </MenuTopButtonIcon>
-        );
+    case "back":
+      return (
+        <MenuTopButtonIcon>
+          <KeyboardBackspaceIcon fontSize="small" />
+          <Button size="small" onClick={func}>
+            {name ? name : "Назад"}
+          </Button>
+        </MenuTopButtonIcon>
+      );
 
     default:
       break;
   }
 };
 
-const MenuTopButtons = ({type, name}) => {
-  return getButtonIcon(type, name)
-}
+const MenuTopButtons = ({ type, name, func }) => {
+  return getButtonIcon(type, name, func);
+};
 
 export default MenuTopButtons;

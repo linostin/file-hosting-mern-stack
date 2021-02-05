@@ -110,7 +110,7 @@ function Disk() {
       onDragLeave={dragLeaveHandler}
       onDragOver={dragEnterHandler}
     >
-      <MenuTop checkboxSelectedFiles={checkboxSelectedFiles.length} checkboxSelectedFilesHandler={checkboxSelectedFilesHandler} openMenuTop={openMenuTop}/>
+      <MenuTop checkboxSelectedFiles={checkboxSelectedFiles.length} checkboxSelectedFilesHandler={checkboxSelectedFilesHandler} openMenuTop={openMenuTop} backFolderFunc={backFolderFunc} popupOpenFunc={popupOpenFunc} fileUploadFunc={fileUploadFunc}/>
       <div className="disk__btns">
         <button className="disk__back" onClick={backFolderFunc}>
           Назад
