@@ -21,8 +21,10 @@ const MenuTop = ({
   deleteFileClickHandler,
   filesViewTypeHandler,
   filesViewType,
+  openFolder,
+  activeFolder,
 }) => {
-  const [closeButton, setCloseButton] = useState(true);
+  const [closeButton, setCloseButton] = useState(false);
 
   const closeButtonHandler = () => {
     setCloseButton(!closeButton);
@@ -31,17 +33,25 @@ const MenuTop = ({
     }
   };
 
-  if (openMenuTop) {
-    return (
-      <MenuTopContainer>
-        <MenuTopButtonsWrapper>
-        <MenuTopButtons type="back" func={backFolderFunc} />
+  return (
+    <MenuTopContainer>
+      <MenuTopButtonsWrapper>
+        {openFolder ? (
+          <MenuTopButtons type="back" func={backFolderFunc} />
+        ) : null}
+        <MenuTopButtons type="create" func={popupOpenFunc} />
+        <MenuTopButtons type="upload" func={fileUploadFunc} />
+        {activeFolder && (
           <MenuTopButtons type="download" func={downloadLoadClickHandler} />
+        )}
+        {activeFolder && (
           <MenuTopButtons type="delete" func={deleteFileClickHandler} />
-          <MenuTopButtons type="edit" />
-          <MenuTopButtons type="share" />
-        </MenuTopButtonsWrapper>
-        {closeButton && (
+        )}
+        {activeFolder && <MenuTopButtons type="edit" />}
+        {activeFolder && <MenuTopButtons type="share" />}
+      </MenuTopButtonsWrapper>
+      <MenuTopButtonsWrapper>
+        {activeFolder && (
           <MenuTopButtonIcon>
             <Typography color="inherit" variant="subtitle1" component="div">
               {checkboxSelectedFiles} selected
@@ -51,21 +61,13 @@ const MenuTop = ({
             </IconButton>
           </MenuTopButtonIcon>
         )}
-      </MenuTopContainer>
-    );
-  } else {
-    return (
-      <MenuTopContainer>
-        <MenuTopButtonsWrapper>
-          <MenuTopButtons type="create" func={popupOpenFunc} />
-          <MenuTopButtons type="upload" func={fileUploadFunc} />
-        </MenuTopButtonsWrapper>
-        <MenuTopButtonsWrapper>
-          <MenuTopViewTypeButton filesViewTypeHandler={filesViewTypeHandler} filesViewType={filesViewType}/>
-        </MenuTopButtonsWrapper>
-      </MenuTopContainer>
-    );
-  }
+        <MenuTopViewTypeButton
+          filesViewTypeHandler={filesViewTypeHandler}
+          filesViewType={filesViewType}
+        />
+      </MenuTopButtonsWrapper>
+    </MenuTopContainer>
+  );
 };
 
 export default MenuTop;

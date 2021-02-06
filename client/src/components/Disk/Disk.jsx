@@ -11,19 +11,21 @@ import { setCurrentDir, pushToStack } from "../../reducers/fileReducer";
 import Popup from "./Popup/Popup";
 import Uploader from "./Uploader/Uploader";
 import MenuTop from "../MenuTop/MenuTop";
-import FilesView from "./FilesView/FilesView"
+import FilesView from "./FilesView/FilesView";
 
 import "./Styles/style.css";
 
 function Disk() {
   const dispatch = useDispatch();
 
-  const [rowCheckboxSelectedFiles, setRowCheckboxSelectedFiles] = useState()
+  const [rowCheckboxSelectedFiles, setRowCheckboxSelectedFiles] = useState();
   const [checkboxSelectedFiles, setCheckboxSelectedFiles] = useState([]);
   const [openMenuTop, setOpenMenuTop] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [dragDropEnter, setDragDropEnter] = useState(false);
-  const [filesViewType, setFilesViewType] = useState('list')
+  const [filesViewType, setFilesViewType] = useState("list");
+  const [openFolder, setOpenFolder] = useState(false);
+  const [activeFolder, setActiveFolder] = useState(false);
 
   // const isAuth = useSelector((state) => state.user.isAuth);
   const currentDir = useSelector((state) => state.files.currentDir);
@@ -45,16 +47,21 @@ function Disk() {
     setPopupOpen(false);
   };
 
-  const openFolderFunc = (dirName, id, type) => {
+  const openFolderFunc = (event, id, type) => {
+    console.log(id, type);
+    event.stopPropagation();
     if (type === "dir") {
       dispatch(pushToStack(currentDir));
       dispatch(setCurrentDir(id));
+      setOpenFolder(true);
+      setActiveFolder(false)
     }
   };
 
   const backFolderFunc = () => {
     const backDirId = dirStack.pop();
     dispatch(setCurrentDir(backDirId));
+    setOpenFolder(false);
   };
 
   const createDirHandler = (dirName) => {
@@ -105,12 +112,20 @@ function Disk() {
   };
 
   const rowCheckboxSelectedFilesHandler = (row) => {
-    setRowCheckboxSelectedFiles(row)
-  }
+    setRowCheckboxSelectedFiles(row);
+  };
 
   const filesViewTypeHandler = (viewType) => {
-    setFilesViewType(viewType)
-  }
+    setFilesViewType(viewType);
+  };
+
+  const activeFolderHandler = (id) => {
+    if (activeFolder === id) {
+      setActiveFolder(false);
+    } else {
+      setActiveFolder(id);
+    }
+  };
 
   return (
     <div
@@ -130,8 +145,16 @@ function Disk() {
         deleteFileClickHandler={deleteFileClickHandler}
         filesViewTypeHandler={filesViewTypeHandler}
         filesViewType={filesViewType}
+        openFolder={openFolder}
+        activeFolder={activeFolder}
       />
-      <FilesView filesList={filesList} filesViewType={filesViewType} openFolderFunc={openFolderFunc}/>
+      <FilesView
+        filesList={filesList}
+        filesViewType={filesViewType}
+        openFolderFunc={openFolderFunc}
+        activeFolder={activeFolder}
+        activeFolderHandler={activeFolderHandler}
+      />
 
       <Popup
         popupOpen={popupOpen}

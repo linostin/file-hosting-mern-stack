@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import FolderIcon from "@material-ui/icons/Folder";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import Typography from "@material-ui/core/Typography";
+import Checkbox from "@material-ui/core/Checkbox";
 import {
   FilesViewGridContainer,
   FilesViewGridElementWrapper,
   FilesViewGridFolderIcon,
   FilesViewGridDescription,
+  FilesViewCheckbox,
 } from "../styled";
 
-const FilesViewGrid = ({ filesList, openFolderFunc }) => {
-  const activeHandler = () => {
-    console.log("activeHandler");
+const FilesViewGrid = ({ filesList, openFolderFunc, activeFolder, activeFolderHandler }) => {
+  
+
+  const activeHandler = (event, id) => {
+    activeFolderHandler(id);
   };
 
   return (
@@ -20,9 +24,13 @@ const FilesViewGrid = ({ filesList, openFolderFunc }) => {
         return (
           <FilesViewGridElementWrapper
             key={element._id}
-            onClick={activeHandler}
+            onClick={(event) => activeHandler(event, element._id)}
+            active={element._id === activeFolder ? true : false}
           >
-            <FilesViewGridFolderIcon onclick={openFolderFunc}>
+            <FilesViewCheckbox active={element._id === activeFolder ? true : false}>
+              <Checkbox size='small' onClick={(event) => activeHandler(event, element._id)} checked={element._id === activeFolder ? true : false}/>
+            </FilesViewCheckbox>
+            <FilesViewGridFolderIcon onClick={(event) => openFolderFunc(event, element._id, element.type)}>
               {element.type === "dir" ? (
                 <FolderIcon
                   style={{ fontSize: 100, color: "rgba(0, 0, 0, 0.54)" }}

@@ -1,14 +1,26 @@
-import React from 'react'
-import FilesViewList from "./FilesViewList/FilesViewList"
-import FilesViewGrid from "./FilesViewGrid/FilesViewGrid"
+import React from "react";
+import FilesViewList from "./FilesViewList/FilesViewList";
+import FilesViewGrid from "./FilesViewGrid/FilesViewGrid";
 
-function FilesViewTypes({ filesList, filesViewType, openFolderFunc }) {
-  if (filesViewType === 'list') {
-   return <FilesViewList filesList={filesList}/>
+function FilesViewTypes({
+  filesList,
+  filesViewType,
+  openFolderFunc,
+  activeFolder,
+  activeFolderHandler,
+}) {
+  if (filesViewType === "list") {
+    return <FilesViewList filesList={filesList} />;
   } else {
-    return <FilesViewGrid filesList={filesList} openFolderFunc={openFolderFunc}/>
+    return (
+      <FilesViewGrid
+        filesList={filesList}
+        openFolderFunc={openFolderFunc}
+        activeFolder={activeFolder}
+        activeFolderHandler={activeFolderHandler}
+      />
+    );
   }
- 
 }
 
-export default FilesViewTypes
+export default FilesViewTypes;
