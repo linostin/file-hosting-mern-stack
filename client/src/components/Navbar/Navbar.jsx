@@ -13,7 +13,12 @@ import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../reducers/userReducer";
-import Search from "./Search/Search";
+import Search from "./NavbarSearch/NavbarSearch";
+import {
+  NavbarContainer,
+  NavbarElementWrapper,
+  NavbarSearchField,
+} from "./styled";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,19 +27,12 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    marginLeft: "10px",
-  },
-  appBarTypography: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  toolbarSignIn: {
+  toolbarAuthFalse: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
   },
-  toolbarAuthReady: {
+  toolbarAuthTrue: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -42,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   navlink: {
     textDecoration: "none",
     color: "white",
+    marginLeft: "10px",
   },
   search: {
     position: "relative",
@@ -100,13 +99,11 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-  return (
-    <div className={classes.root}>
+  if (isAuth) {
+    return (
       <AppBar position="static">
-        <Toolbar
-          className={isAuth ? classes.toolbarAuthReady : classes.toolbarSignIn}
-        >
-          {isAuth && (
+        <Toolbar className={classes.toolbarAuthTrue}>
+          <NavbarElementWrapper>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -115,67 +112,66 @@ export default function Navbar() {
             >
               <MenuIcon />
             </IconButton>
-          )}
+          </NavbarElementWrapper>
 
-          {!isAuth && (
-            <div className={classes.appBarTypography}>
-              <NavLink className={classes.navlink} to="/register">
-                <Typography variant="h6" className={classes.title}>
-                  Регистрация
-                </Typography>
-              </NavLink>
-              <NavLink className={classes.navlink} to="/login">
-                <Typography variant="h6" className={classes.title}>
-                  Войти
-                </Typography>
-              </NavLink>
-            </div>
-          )}
+          <NavbarElementWrapper>
+            <Search />
+          </NavbarElementWrapper>
 
-          {isAuth && <Search />}
-
-          {isAuth && (
-            <div className={classes.appBarTypography}>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-
-              <Typography
-                onClick={() => dispatch(logout())}
-                variant="h6"
-                className={classes.title}
-              >
-                Выйти
-              </Typography>
-
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          )}
+          <NavbarElementWrapper>
+            <NavLink
+              className={classes.navlink}
+              to="/login"
+              onClick={() => dispatch(logout())}
+            >
+              <Typography variant="h6">Выйти</Typography>
+            </NavLink>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+            </Menu>
+          </NavbarElementWrapper>
         </Toolbar>
       </AppBar>
-    </div>
-  );
+    );
+  } else {
+    // TODO change mui styles in Toolbar to styled-components
+    return (
+      <AppBar position="static">
+        <Toolbar className={classes.toolbarAuthFalse}>
+          <NavbarElementWrapper>
+            <NavLink className={classes.navlink} to="/register">
+              <Typography variant="h6">Регистрация</Typography>
+            </NavLink>
+            <NavLink className={classes.navlink} to="/login">
+              <Typography variant="h6">Войти</Typography>
+            </NavLink>
+          </NavbarElementWrapper>
+        </Toolbar>
+      </AppBar>
+    );
+  }
 }

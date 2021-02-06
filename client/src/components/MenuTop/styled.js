@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const MenuTopContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   min-height: 50px;

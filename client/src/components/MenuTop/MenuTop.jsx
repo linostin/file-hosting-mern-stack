@@ -7,9 +7,8 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import MenuTopButtons from "./MenuTopButtons/MenuTopButtons"
-import MenuTopViewTypeButton from "./MenuTopButtons/MenuTopViewTypeButton"
-
+import MenuTopButtons from "./MenuTopButtons/MenuTopButtons";
+import MenuTopViewTypeButton from "./MenuTopButtons/MenuTopViewTypeButton";
 
 const MenuTop = ({
   checkboxSelectedFiles,
@@ -20,8 +19,9 @@ const MenuTop = ({
   fileUploadFunc,
   downloadLoadClickHandler,
   deleteFileClickHandler,
+  filesViewTypeHandler,
+  filesViewType,
 }) => {
-
   const [closeButton, setCloseButton] = useState(true);
 
   const closeButtonHandler = () => {
@@ -35,10 +35,11 @@ const MenuTop = ({
     return (
       <MenuTopContainer>
         <MenuTopButtonsWrapper>
-          <MenuTopButtons type='download' func={downloadLoadClickHandler}/>
-          <MenuTopButtons type='delete' func={deleteFileClickHandler}/>
-          <MenuTopButtons type='edit'/>
-          <MenuTopButtons type='share'/>
+        <MenuTopButtons type="back" func={backFolderFunc} />
+          <MenuTopButtons type="download" func={downloadLoadClickHandler} />
+          <MenuTopButtons type="delete" func={deleteFileClickHandler} />
+          <MenuTopButtons type="edit" />
+          <MenuTopButtons type="share" />
         </MenuTopButtonsWrapper>
         {closeButton && (
           <MenuTopButtonIcon>
@@ -56,10 +57,11 @@ const MenuTop = ({
     return (
       <MenuTopContainer>
         <MenuTopButtonsWrapper>
-          <MenuTopButtons type='back'func={backFolderFunc}/>
-          <MenuTopButtons type='create'func={popupOpenFunc}/>
-          <MenuTopButtons type='upload'func={fileUploadFunc}/>
-          <MenuTopViewTypeButton/>
+          <MenuTopButtons type="create" func={popupOpenFunc} />
+          <MenuTopButtons type="upload" func={fileUploadFunc} />
+        </MenuTopButtonsWrapper>
+        <MenuTopButtonsWrapper>
+          <MenuTopViewTypeButton filesViewTypeHandler={filesViewTypeHandler} filesViewType={filesViewType}/>
         </MenuTopButtonsWrapper>
       </MenuTopContainer>
     );

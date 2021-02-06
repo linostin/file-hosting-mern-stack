@@ -12,6 +12,10 @@ import FileList from "./FileList/FileList";
 import Popup from "./Popup/Popup";
 import Uploader from "./Uploader/Uploader";
 import MenuTop from "../MenuTop/MenuTop";
+import File from "./File/File"
+import FileTable from "./File/FileTable"
+import FilesViewGrid from "./FilesView/FilesViewGrid/FilesViewGrid"
+import FilesView from "./FilesView/FilesView"
 
 import "./Styles/style.css";
 
@@ -23,6 +27,7 @@ function Disk() {
   const [openMenuTop, setOpenMenuTop] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [dragDropEnter, setDragDropEnter] = useState(false);
+  const [filesViewType, setFilesViewType] = useState('list')
 
   // const isAuth = useSelector((state) => state.user.isAuth);
   const currentDir = useSelector((state) => state.files.currentDir);
@@ -107,6 +112,10 @@ function Disk() {
     setRowCheckboxSelectedFiles(row)
   }
 
+  const filesViewTypeHandler = (viewType) => {
+    setFilesViewType(viewType)
+  }
+
   return (
     <div
       className="disk"
@@ -123,9 +132,14 @@ function Disk() {
         fileUploadFunc={fileUploadFunc}
         downloadLoadClickHandler={downloadLoadClickHandler}
         deleteFileClickHandler={deleteFileClickHandler}
+        filesViewTypeHandler={filesViewTypeHandler}
+        filesViewType={filesViewType}
       />
-
-      <FileList
+      <FilesView filesList={filesList} filesViewType={filesViewType}/>
+      {/* <File filesList={filesList}/>
+      <FileTable filesList={filesList}/>
+      <FilesViewGrid filesList={filesList}/> */}
+      {/* <FileList
         filesList={filesList}
         checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
         rowCheckboxSelectedFilesHandler={rowCheckboxSelectedFilesHandler}
@@ -133,7 +147,7 @@ function Disk() {
         openFolderFunc={openFolderFunc}
         downloadLoadClickHandler={downloadLoadClickHandler}
         deleteFileClickHandler={deleteFileClickHandler}
-      />
+      /> */}
       <Popup
         popupOpen={popupOpen}
         popupCloseFunc={popupCloseFunc}
