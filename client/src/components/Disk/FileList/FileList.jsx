@@ -136,63 +136,63 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTableToolbar = (props) => {
-  const classes = useToolbarStyles();
-  const { numSelected, downloadLoadClickHandler, rowCheckboxSelected, deleteFileClickHandler } = props;
+// const EnhancedTableToolbar = (props) => {
+//   const classes = useToolbarStyles();
+//   const { numSelected, downloadLoadClickHandler, rowCheckboxSelected, deleteFileClickHandler } = props;
 
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Список файлов
-        </Typography>
-      )}
+//   return (
+//     <Toolbar
+//       className={clsx(classes.root, {
+//         [classes.highlight]: numSelected > 0,
+//       })}
+//     >
+//       {numSelected > 0 ? (
+//         <Typography
+//           className={classes.title}
+//           color="inherit"
+//           variant="subtitle1"
+//           component="div"
+//         >
+//           {numSelected} selected
+//         </Typography>
+//       ) : (
+//         <Typography
+//           className={classes.title}
+//           variant="h6"
+//           id="tableTitle"
+//           component="div"
+//         >
+//           Список файлов
+//         </Typography>
+//       )}
 
-      {numSelected > 0 ? (
-        <>
-          <Tooltip title="Download">
-            <IconButton aria-label="download" onClick={(event) => downloadLoadClickHandler(event, rowCheckboxSelected)}>
-              <GetAppIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <IconButton aria-label="delete" onClick={(event) => deleteFileClickHandler(event, rowCheckboxSelected)}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        </>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-};
+//       {numSelected > 0 ? (
+//         <>
+//           <Tooltip title="Download">
+//             <IconButton aria-label="download" onClick={(event) => downloadLoadClickHandler(event, rowCheckboxSelected)}>
+//               <GetAppIcon />
+//             </IconButton>
+//           </Tooltip>
+//           <Tooltip title="Delete">
+//             <IconButton aria-label="delete" onClick={(event) => deleteFileClickHandler(event, rowCheckboxSelected)}>
+//               <DeleteIcon />
+//             </IconButton>
+//           </Tooltip>
+//         </>
+//       ) : (
+//         <Tooltip title="Filter list">
+//           <IconButton aria-label="filter list">
+//             <FilterListIcon />
+//           </IconButton>
+//         </Tooltip>
+//       )}
+//     </Toolbar>
+//   );
+// };
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+// EnhancedTableToolbar.propTypes = {
+//   numSelected: PropTypes.number.isRequired,
+// };
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -218,7 +218,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FileList({ filesList, checkboxSelectedFilesHandler, menuTopHandler, openFolderFunc, downloadLoadClickHandler, deleteFileClickHandler }) {
+export default function FileList({ filesList, checkboxSelectedFilesHandler, rowCheckboxSelectedFilesHandler, menuTopHandler, openFolderFunc, downloadLoadClickHandler, deleteFileClickHandler }) {
   // console.log("FILELIST", filesList)
 
   const classes = useStyles();
@@ -270,6 +270,7 @@ export default function FileList({ filesList, checkboxSelectedFilesHandler, menu
     setRowCheckboxSelected(row)
     menuTopHandler(true)
     checkboxSelectedFilesHandler(newSelected)
+    rowCheckboxSelectedFilesHandler(row)
   };
 
   const handleChangePage = (event, newPage) => {
@@ -293,7 +294,7 @@ export default function FileList({ filesList, checkboxSelectedFilesHandler, menu
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} downloadLoadClickHandler={downloadLoadClickHandler} rowCheckboxSelected={rowCheckboxSelected} deleteFileClickHandler={deleteFileClickHandler}/>
+        {/* <EnhancedTableToolbar numSelected={selected.length} downloadLoadClickHandler={downloadLoadClickHandler} rowCheckboxSelected={rowCheckboxSelected} deleteFileClickHandler={deleteFileClickHandler}/> */}
         <TableContainer>
           <Table
             className={classes.table}

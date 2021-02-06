@@ -8,6 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import MenuTopButtons from "./MenuTopButtons/MenuTopButtons"
+import MenuTopViewTypeButton from "./MenuTopButtons/MenuTopViewTypeButton"
 
 
 const MenuTop = ({
@@ -17,6 +18,8 @@ const MenuTop = ({
   backFolderFunc,
   popupOpenFunc,
   fileUploadFunc,
+  downloadLoadClickHandler,
+  deleteFileClickHandler,
 }) => {
 
   const [closeButton, setCloseButton] = useState(true);
@@ -32,8 +35,8 @@ const MenuTop = ({
     return (
       <MenuTopContainer>
         <MenuTopButtonsWrapper>
-          <MenuTopButtons type='download'/>
-          <MenuTopButtons type='delete'/>
+          <MenuTopButtons type='download' func={downloadLoadClickHandler}/>
+          <MenuTopButtons type='delete' func={deleteFileClickHandler}/>
           <MenuTopButtons type='edit'/>
           <MenuTopButtons type='share'/>
         </MenuTopButtonsWrapper>
@@ -56,6 +59,7 @@ const MenuTop = ({
           <MenuTopButtons type='back'func={backFolderFunc}/>
           <MenuTopButtons type='create'func={popupOpenFunc}/>
           <MenuTopButtons type='upload'func={fileUploadFunc}/>
+          <MenuTopViewTypeButton/>
         </MenuTopButtonsWrapper>
       </MenuTopContainer>
     );

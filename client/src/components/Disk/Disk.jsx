@@ -10,17 +10,17 @@ import {
 import { setCurrentDir, pushToStack } from "../../reducers/fileReducer";
 import FileList from "./FileList/FileList";
 import Popup from "./Popup/Popup";
-import UploadButton from "./UploadButton/UploadButton";
 import Uploader from "./Uploader/Uploader";
-import MenuTop from '../MenuTop/MenuTop'
+import MenuTop from "../MenuTop/MenuTop";
 
 import "./Styles/style.css";
 
 function Disk() {
   const dispatch = useDispatch();
 
-  const [checkboxSelectedFiles, setCheckboxSelectedFiles] = useState([])
-  const [openMenuTop, setOpenMenuTop] =useState(false)
+  const [rowCheckboxSelectedFiles, setRowCheckboxSelectedFiles] = useState()
+  const [checkboxSelectedFiles, setCheckboxSelectedFiles] = useState([]);
+  const [openMenuTop, setOpenMenuTop] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
   const [dragDropEnter, setDragDropEnter] = useState(false);
 
@@ -85,22 +85,26 @@ function Disk() {
     setDragDropEnter(false);
   };
 
-  const downloadLoadClickHandler = (event, file) => {
+  const downloadLoadClickHandler = (event) => {
     event.stopPropagation();
-    dispatch(downloadFile(file));
+    dispatch(downloadFile(rowCheckboxSelectedFiles));
   };
 
-  const deleteFileClickHandler = (event, file) => {
+  const deleteFileClickHandler = (event) => {
     event.stopPropagation();
-    dispatch(deleteFile(file));
+    dispatch(deleteFile(rowCheckboxSelectedFiles));
   };
 
   const menuTopHandler = (status) => {
-    setOpenMenuTop(status)
-  }
+    setOpenMenuTop(status);
+  };
 
   const checkboxSelectedFilesHandler = (selected) => {
-    setCheckboxSelectedFiles(selected)
+    setCheckboxSelectedFiles(selected);
+  };
+
+  const rowCheckboxSelectedFilesHandler = (row) => {
+    setRowCheckboxSelectedFiles(row)
   }
 
   return (
@@ -110,20 +114,26 @@ function Disk() {
       onDragLeave={dragLeaveHandler}
       onDragOver={dragEnterHandler}
     >
-      <MenuTop checkboxSelectedFiles={checkboxSelectedFiles.length} checkboxSelectedFilesHandler={checkboxSelectedFilesHandler} openMenuTop={openMenuTop} backFolderFunc={backFolderFunc} popupOpenFunc={popupOpenFunc} fileUploadFunc={fileUploadFunc}/>
-      <div className="disk__btns">
-        <button className="disk__back" onClick={backFolderFunc}>
-          Назад
-        </button>
-        <button className="disk__create" onClick={() => popupOpenFunc()}>
-          Создать папку
-        </button>
-        <button className="disk__create" onClick={() => popupOpenFunc()}>
-          Тест popup
-        </button>
-        <UploadButton fileUploadFunc={fileUploadFunc} />
-      </div>
-      <FileList filesList={filesList} checkboxSelectedFilesHandler={checkboxSelectedFilesHandler} menuTopHandler={menuTopHandler} openFolderFunc={openFolderFunc} downloadLoadClickHandler={downloadLoadClickHandler} deleteFileClickHandler={deleteFileClickHandler}/>
+      <MenuTop
+        checkboxSelectedFiles={checkboxSelectedFiles.length}
+        checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
+        openMenuTop={openMenuTop}
+        backFolderFunc={backFolderFunc}
+        popupOpenFunc={popupOpenFunc}
+        fileUploadFunc={fileUploadFunc}
+        downloadLoadClickHandler={downloadLoadClickHandler}
+        deleteFileClickHandler={deleteFileClickHandler}
+      />
+
+      <FileList
+        filesList={filesList}
+        checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
+        rowCheckboxSelectedFilesHandler={rowCheckboxSelectedFilesHandler}
+        menuTopHandler={menuTopHandler}
+        openFolderFunc={openFolderFunc}
+        downloadLoadClickHandler={downloadLoadClickHandler}
+        deleteFileClickHandler={deleteFileClickHandler}
+      />
       <Popup
         popupOpen={popupOpen}
         popupCloseFunc={popupCloseFunc}

@@ -15,7 +15,7 @@ const getButtonIcon = (type, name, func) => {
       return (
         <MenuTopButtonIcon>
           <GetAppIcon fontSize="small" />
-          <Button size="small" onClick={func}>
+          <Button size="small" onClick={(event) => func(event)}>
             {name ? name : "Скачать"}
           </Button>
         </MenuTopButtonIcon>
@@ -25,7 +25,7 @@ const getButtonIcon = (type, name, func) => {
       return (
         <MenuTopButtonIcon>
           <DeleteIcon fontSize="small" />
-          <Button size="small" onClick={func}>
+          <Button size="small" onClick={(event) => func(event)}>
             {name ? name : "Удалить"}
           </Button>
         </MenuTopButtonIcon>
