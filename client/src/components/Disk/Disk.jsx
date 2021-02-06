@@ -8,13 +8,9 @@ import {
   deleteFile,
 } from "../../actions/file";
 import { setCurrentDir, pushToStack } from "../../reducers/fileReducer";
-import FileList from "./FileList/FileList";
 import Popup from "./Popup/Popup";
 import Uploader from "./Uploader/Uploader";
 import MenuTop from "../MenuTop/MenuTop";
-import File from "./File/File"
-import FileTable from "./File/FileTable"
-import FilesViewGrid from "./FilesView/FilesViewGrid/FilesViewGrid"
 import FilesView from "./FilesView/FilesView"
 
 import "./Styles/style.css";
@@ -135,19 +131,8 @@ function Disk() {
         filesViewTypeHandler={filesViewTypeHandler}
         filesViewType={filesViewType}
       />
-      <FilesView filesList={filesList} filesViewType={filesViewType}/>
-      {/* <File filesList={filesList}/>
-      <FileTable filesList={filesList}/>
-      <FilesViewGrid filesList={filesList}/> */}
-      {/* <FileList
-        filesList={filesList}
-        checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
-        rowCheckboxSelectedFilesHandler={rowCheckboxSelectedFilesHandler}
-        menuTopHandler={menuTopHandler}
-        openFolderFunc={openFolderFunc}
-        downloadLoadClickHandler={downloadLoadClickHandler}
-        deleteFileClickHandler={deleteFileClickHandler}
-      /> */}
+      <FilesView filesList={filesList} filesViewType={filesViewType} openFolderFunc={openFolderFunc}/>
+
       <Popup
         popupOpen={popupOpen}
         popupCloseFunc={popupCloseFunc}

@@ -9,7 +9,7 @@ import {
   FilesViewGridDescription,
 } from "../styled";
 
-const FilesViewGrid = ({ filesList }) => {
+const FilesViewGrid = ({ filesList, openFolderFunc }) => {
   const activeHandler = () => {
     console.log("activeHandler");
   };
@@ -22,7 +22,7 @@ const FilesViewGrid = ({ filesList }) => {
             key={element._id}
             onClick={activeHandler}
           >
-            <FilesViewGridFolderIcon>
+            <FilesViewGridFolderIcon onclick={openFolderFunc}>
               {element.type === "dir" ? (
                 <FolderIcon
                   style={{ fontSize: 100, color: "rgba(0, 0, 0, 0.54)" }}

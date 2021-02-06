@@ -12,10 +12,13 @@ export const FilesViewGridElementWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 130px;
-  min-height: 130px;
+  min-width: 150px;
+  min-height: 150px;
   &:hover {
     background-color: #edebe9;
+  &:active {
+    background-color: #e1dfdd;
+  }
   }
 `;
 
@@ -26,4 +29,6 @@ export const FilesViewGridDescription = styled.div`
   align-items: center;
 `;
 
-export const FilesViewGridFolderIcon = styled.div``;
+export const FilesViewGridFolderIcon = styled.div`
+  cursor: pointer;
+`;
