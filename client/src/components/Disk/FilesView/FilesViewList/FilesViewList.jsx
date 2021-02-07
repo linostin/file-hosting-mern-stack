@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import FolderIcon from "@material-ui/icons/Folder";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import { FilesViewListTableCellName } from "../styled";
 
 const useStyles = makeStyles({
   table: {
@@ -17,7 +18,12 @@ const useStyles = makeStyles({
   },
 });
 
-const FilesViewList = ({ filesList }) => {
+const FilesViewList = ({
+  filesList,
+  openFolderFunc,
+  activeFolder,
+  activeFolderHandler,
+}) => {
   const classes = useStyles();
 
   return (
@@ -36,9 +42,17 @@ const FilesViewList = ({ filesList }) => {
         </TableHead>
         <TableBody>
           {filesList.map((element, index) => (
-            <TableRow key={element._id} hover>
+            <TableRow
+              key={element._id}
+              hover
+              selected={element._id === activeFolder ? true : false}
+              onClick={() => activeFolderHandler(element._id)}
+            >
               <TableCell padding="checkbox">
-                <Checkbox />
+                <Checkbox
+                  onClick={() => activeFolderHandler(element._id)}
+                  checked={element._id === activeFolder ? true : false}
+                />
               </TableCell>
               <TableCell>
                 {element.type === "dir" ? (
@@ -50,7 +64,9 @@ const FilesViewList = ({ filesList }) => {
                 )}
               </TableCell>
               <TableCell component="th" scope="row">
-                {element.name}
+                <FilesViewListTableCellName>
+                  {element.name}
+                </FilesViewListTableCellName>
               </TableCell>
               <TableCell align="right">{element.date}</TableCell>
               <TableCell align="right">{element.size}</TableCell>

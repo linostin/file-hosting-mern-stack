@@ -17,9 +17,6 @@ const FilesViewGrid = ({
   activeFolder,
   activeFolderHandler,
 }) => {
-  const activeHandler = (event, id) => {
-    activeFolderHandler(id);
-  };
 
   return (
     <FilesViewGridContainer>
@@ -27,7 +24,7 @@ const FilesViewGrid = ({
         return (
           <FilesViewGridElementWrapper
             key={element._id}
-            onClick={(event) => activeHandler(event, element._id)}
+            onClick={() => activeFolderHandler(element._id)}
             active={element._id === activeFolder ? true : false}
           >
             <FilesViewCheckbox
@@ -35,7 +32,7 @@ const FilesViewGrid = ({
             >
               <Checkbox
                 size="small"
-                onClick={(event) => activeHandler(event, element._id)}
+                onClick={() => activeFolderHandler(element._id)}
                 checked={element._id === activeFolder ? true : false}
               />
             </FilesViewCheckbox>

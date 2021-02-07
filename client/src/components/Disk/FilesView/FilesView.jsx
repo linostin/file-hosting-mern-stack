@@ -10,7 +10,14 @@ function FilesViewTypes({
   activeFolderHandler,
 }) {
   if (filesViewType === "list") {
-    return <FilesViewList filesList={filesList} />;
+    return (
+      <FilesViewList
+        filesList={filesList}
+        openFolderFunc={openFolderFunc}
+        activeFolder={activeFolder}
+        activeFolderHandler={activeFolderHandler}
+      />
+    );
   } else {
     return (
       <FilesViewGrid

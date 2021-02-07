@@ -49,3 +49,11 @@ export const FilesViewGridDescription = styled.div`
 export const FilesViewGridFolderIcon = styled.div`
   cursor: pointer;
 `;
+
+export const FilesViewListTableCellName = styled.div`
+  display: inline-block;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
