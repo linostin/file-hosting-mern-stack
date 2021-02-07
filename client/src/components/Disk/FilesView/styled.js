@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const FilesViewGridContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
   margin-top: 5px;
 `;
@@ -20,8 +21,8 @@ export const FilesViewGridElementWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 170px;
-  min-height: 170px;
+  width: 170px;
+  height: 170px;
   background-color: ${(props) => (props.active ? "#e1dfdd" : null)};
   &:hover ${FilesViewCheckbox} {
     display: block;
@@ -40,6 +41,9 @@ export const FilesViewGridDescription = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* text-overflow: ellipsis;
+  overflow: hidden; */
+  /* max-width: 170px; */
 `;
 
 export const FilesViewGridFolderIcon = styled.div`
