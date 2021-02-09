@@ -23,8 +23,14 @@ const FilesViewList = ({
   openFolderFunc,
   activeFolder,
   activeFolderHandler,
+  selectedFilesHandler
 }) => {
   const classes = useStyles();
+
+  const checkboxSelected = (element) => {
+    activeFolderHandler(element._id)
+    selectedFilesHandler(element)
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -46,11 +52,11 @@ const FilesViewList = ({
               key={element._id}
               hover
               selected={element._id === activeFolder ? true : false}
-              onClick={() => activeFolderHandler(element._id)}
+              onClick={() => checkboxSelected(element)}
             >
               <TableCell padding="checkbox">
                 <Checkbox
-                  onClick={() => activeFolderHandler(element._id)}
+                  onClick={() => checkboxSelected(element)}
                   checked={element._id === activeFolder ? true : false}
                 />
               </TableCell>
@@ -64,11 +70,11 @@ const FilesViewList = ({
                 )}
               </TableCell>
               <TableCell component="th" scope="row">
-                <FilesViewListTableCellName>
+                <FilesViewListTableCellName onClick={(event) => openFolderFunc(event, element._id, element.type)}>
                   {element.name}
                 </FilesViewListTableCellName>
               </TableCell>
-              <TableCell align="right">{element.date}</TableCell>
+              <TableCell align="right">{element.date.slice(0, 10)}</TableCell>
               <TableCell align="right">{element.size}</TableCell>
             </TableRow>
           ))}

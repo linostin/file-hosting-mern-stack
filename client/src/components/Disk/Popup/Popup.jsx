@@ -81,10 +81,6 @@ const Popup = ({ popupOpen, popupCloseFunc, createDirHandler }) => {
   }
 
   return (
-    <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open dialog
-      </Button> */}
       <Dialog
         onClose={popupCloseFunc}
         aria-labelledby="customized-dialog-title"
@@ -92,6 +88,8 @@ const Popup = ({ popupOpen, popupCloseFunc, createDirHandler }) => {
         fullScreen={fullScreen}
         TransitionComponent={Transition}
         keepMounted
+        maxWidth="xs"
+        fullWidth
       >
         <DialogTitle id="customized-dialog-title" onClose={popupCloseFunc}>
           Введите название папки
@@ -110,12 +108,15 @@ const Popup = ({ popupOpen, popupCloseFunc, createDirHandler }) => {
           />
         </DialogContent>
         <DialogActions>
+        <Button onClick={popupCloseFunc} color="primary">
+            Отмена
+          </Button>
           <Button onClick={() => onClickButtonCreateFolder(dirName)} color="primary">
             Создать папку
           </Button>
         </DialogActions>
+
       </Dialog>
-    </div>
   );
 };
 

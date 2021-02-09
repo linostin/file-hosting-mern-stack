@@ -13,6 +13,7 @@ import MenuTopViewTypeButton from "./MenuTopButtons/MenuTopViewTypeButton";
 const MenuTop = ({
   checkboxSelectedFiles,
   checkboxSelectedFilesHandler,
+  selectedFilesHandler,
   openMenuTop,
   backFolderFunc,
   popupOpenFunc,

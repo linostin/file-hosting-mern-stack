@@ -3,9 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { store } from "./reducers";
 import { Provider } from "react-redux";
-import styled, {
-  createGlobalStyle,
-} from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 const Global = createGlobalStyle`
 * {
@@ -19,7 +17,7 @@ ReactDOM.render(
   <>
     <Provider store={store}>
       <Global />
-      <App />
+        <App />
     </Provider>
   </>,
   document.getElementById("root")

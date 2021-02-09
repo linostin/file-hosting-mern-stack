@@ -8,6 +8,7 @@ function FilesViewTypes({
   openFolderFunc,
   activeFolder,
   activeFolderHandler,
+  selectedFilesHandler
 }) {
   if (filesViewType === "list") {
     return (
@@ -16,6 +17,7 @@ function FilesViewTypes({
         openFolderFunc={openFolderFunc}
         activeFolder={activeFolder}
         activeFolderHandler={activeFolderHandler}
+        selectedFilesHandler={selectedFilesHandler}
       />
     );
   } else {

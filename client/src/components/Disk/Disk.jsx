@@ -12,13 +12,15 @@ import Popup from "./Popup/Popup";
 import Uploader from "./Uploader/Uploader";
 import MenuTop from "../MenuTop/MenuTop";
 import FilesView from "./FilesView/FilesView";
+import Button from '@material-ui/core/Button';
+import CardMessage from "./Uploader/CardMessage"
 
 import "./Styles/style.css";
 
 function Disk() {
   const dispatch = useDispatch();
 
-  const [rowCheckboxSelectedFiles, setRowCheckboxSelectedFiles] = useState();
+  const [selectedFiles, setSelectedFiles] = useState();
   const [checkboxSelectedFiles, setCheckboxSelectedFiles] = useState([]);
   const [openMenuTop, setOpenMenuTop] = useState(false);
   const [popupOpen, setPopupOpen] = useState(false);
@@ -26,6 +28,7 @@ function Disk() {
   const [filesViewType, setFilesViewType] = useState("list");
   const [openFolder, setOpenFolder] = useState(false);
   const [activeFolder, setActiveFolder] = useState(false);
+  const [uploader, setUploader] = useState(false);
 
   // const isAuth = useSelector((state) => state.user.isAuth);
   const currentDir = useSelector((state) => state.files.currentDir);
@@ -38,6 +41,10 @@ function Disk() {
   useEffect(() => {
     dispatch(getFiles(currentDir));
   }, [currentDir]);
+
+  const uploaderHandleClick = () => {
+    setUploader(!uploader)
+  }
 
   const popupOpenFunc = () => {
     setPopupOpen(true);
@@ -95,12 +102,13 @@ function Disk() {
 
   const downloadLoadClickHandler = (event) => {
     event.stopPropagation();
-    dispatch(downloadFile(rowCheckboxSelectedFiles));
+    console.log(selectedFiles)
+    dispatch(downloadFile(selectedFiles));
   };
 
   const deleteFileClickHandler = (event) => {
     event.stopPropagation();
-    dispatch(deleteFile(rowCheckboxSelectedFiles));
+    dispatch(deleteFile(selectedFiles));
   };
 
   const menuTopHandler = (status) => {
@@ -111,8 +119,8 @@ function Disk() {
     setCheckboxSelectedFiles(selected);
   };
 
-  const rowCheckboxSelectedFilesHandler = (row) => {
-    setRowCheckboxSelectedFiles(row);
+  const selectedFilesHandler = (file) => {
+    setSelectedFiles(file);
   };
 
   const filesViewTypeHandler = (viewType) => {
@@ -137,6 +145,7 @@ function Disk() {
       <MenuTop
         checkboxSelectedFiles={checkboxSelectedFiles.length}
         checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
+        selectedFilesHandler={selectedFilesHandler}
         openMenuTop={openMenuTop}
         backFolderFunc={backFolderFunc}
         popupOpenFunc={popupOpenFunc}
@@ -148,12 +157,14 @@ function Disk() {
         openFolder={openFolder}
         activeFolder={activeFolder}
       />
+      <Button variant="contained" onClick={uploaderHandleClick}>Default</Button>
       <FilesView
         filesList={filesList}
         filesViewType={filesViewType}
         openFolderFunc={openFolderFunc}
         activeFolder={activeFolder}
         activeFolderHandler={activeFolderHandler}
+        selectedFilesHandler={selectedFilesHandler}
       />
 
       <Popup
@@ -161,7 +172,8 @@ function Disk() {
         popupCloseFunc={popupCloseFunc}
         createDirHandler={createDirHandler}
       />
-      <Uploader />
+      <CardMessage/>
+      {/* <Uploader /> */}
     </div>
   );
 
