@@ -40,10 +40,38 @@ class FileController {
 
   async getFiles(req, res) {
     try {
-      const files = await File.find({
-        user: req.user.id,
-        parent: req.query.parent,
-      });
+      const { sort } = req.query;
+      let files;
+      switch (sort) {
+        case "name":
+          files = await File.find({
+            user: req.user.id,
+            parent: req.query.parent,
+          }).sort({ name: 1 });
+          break;
+
+        case "type":
+          files = await File.find({
+            user: req.user.id,
+            parent: req.query.parent,
+          }).sort({ type: 1 });
+          break;
+
+        case "date":
+          files = await File.find({
+            user: req.user.id,
+            parent: req.query.parent,
+          }).sort({ date: 1 });
+          break;
+
+        default:
+          files = await File.find({
+            user: req.user.id,
+            parent: req.query.parent,
+          });
+          break;
+      }
+
       return res.json(files);
     } catch (error) {
       return res
@@ -53,7 +81,6 @@ class FileController {
   }
 
   async uploadFile(req, res) {
-
     try {
       // получаем файл из запроса
       const file = req.files.file;
@@ -99,12 +126,12 @@ class FileController {
       // получаем тип файла
       const type = file.name.split(".").pop();
 
-      let filePath = file.name
+      let filePath = file.name;
       if (parent) {
-        filePath = parent.path + '\\' + file.name 
+        filePath = parent.path + "\\" + file.name;
       }
 
-      let parentId = parent
+      let parentId = parent;
       if (parent) {
         parentId = parent_id;
       }
@@ -116,7 +143,7 @@ class FileController {
         // path: parent?.path,
         // parent: parent?._id,
         path: filePath,
-        parent: parentId, 
+        parent: parentId,
         user: user._id,
       });
 
@@ -151,19 +178,16 @@ class FileController {
         return res.download(path, file.name);
       }
 
-      return res
-        .status(400)
-        .json({
-          errors: error.message,
-          message: "File not found, download error",
-        });
+      return res.status(400).json({
+        errors: error.message,
+        message: "File not found, download error",
+      });
     } catch (error) {
       return res
         .status(500)
         .json({ errors: error.message, message: "Download error" });
     }
   }
-
 
   async deleteFile(req, res) {
     try {
@@ -173,31 +197,37 @@ class FileController {
       });
 
       if (!file) {
-        return res
-        .status(400)
-        .json({
+        return res.status(400).json({
           errors: error.message,
           message: "File not found",
         });
       }
 
-      console.log("file delete", file)
+      console.log("file delete", file);
 
       // удаляем файл физически с сервера
-      fileService.deleteFile(file)
+      fileService.deleteFile(file);
       // удаляем модель файла из базы данных
-      await file.remove()
+      await file.remove();
 
-      return res
-        .json({ message: "File was deleted" });
-
-      
+      return res.json({ message: "File was deleted" });
     } catch (error) {
       return res
         .status(400)
         .json({ errors: error.message, message: "Delete error" });
     }
   }
+
+  async searchFile(req, res) {
+    try {
+        const searchName = req.query.search
+        let files = await File.find({user: req.user.id})
+        files = files.filter(file => file.name.includes(searchName))
+        return res.json(files)
+    } catch (error) {
+        return res.status(400).json({ errors: error.message, message: 'Search error'})
+    }
+}
 
 }
 

@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
       paddingTop: 0,
-      overflowY: "scroll",
-      maxHeight: "96%",
+    // overflowY: "scroll",
+    //   maxHeight: "96%",
   }
 }));
 

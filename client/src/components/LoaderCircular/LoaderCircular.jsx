@@ -5,6 +5,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "75vh",
     "& > * + *": {
       marginLeft: theme.spacing(2),
     },
@@ -16,7 +19,7 @@ const LoaderCircular = () => {
 
   return (
     <div className={classes.root}>
-      <CircularProgress />
+      <CircularProgress size={80}/>
     </div>
   );
 };

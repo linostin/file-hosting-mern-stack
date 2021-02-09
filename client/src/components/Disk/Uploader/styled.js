@@ -14,7 +14,8 @@ export const CardMessageContainer = styled.div`
   flex-direction: column;
   right: 20px;
   bottom: 15px;
-  overflow: hidden;
+  /* overflow: hidden; */
+  // overflow-y: scroll;
 `;
 
 export const CardMessageFileNameWrapper = styled.div`

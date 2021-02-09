@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -19,6 +19,8 @@ import {
   NavbarElementWrapper,
   NavbarSearchField,
 } from "./styled";
+import { searchFiles, getFiles } from "../../actions/file"
+import { showLoader, hideLoader } from "../../reducers/appReducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,11 +87,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const classes = useStyles();
-
+  const currentDir = useSelector((state) => state.files.currentDir);
   const isAuth = useSelector((state) => state.user.isAuth);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [searchName, setSearchName] = useState('')
+  const [searchTimeout, setSearchTimeout] = useState(false)
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -98,6 +102,21 @@ export default function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const searchChangeHandler = (event) => {
+    setSearchName(event.target.value)
+    if (searchTimeout !== false) {
+      clearTimeout(searchTimeout)
+    }
+    dispatch(showLoader())
+    if (event.target.value !== '') {
+      setSearchTimeout(setTimeout((value) => {
+        dispatch(searchFiles(value))
+      }, 750, event.target.value))
+    } else {
+      dispatch(getFiles(currentDir))
+    }
+  }
 
   if (isAuth) {
     return (
@@ -115,7 +134,7 @@ export default function Navbar() {
           </NavbarElementWrapper>
 
           <NavbarElementWrapper>
-            <Search />
+            <Search searchName={searchName} searchChangeHandler={searchChangeHandler}/>
           </NavbarElementWrapper>
 
           <NavbarElementWrapper>

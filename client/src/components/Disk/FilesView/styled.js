@@ -57,3 +57,11 @@ export const FilesViewListTableCellName = styled.div`
     text-decoration: underline;
   }
 `;
+
+export const FilesViewError = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+height: 75vh;
+`;
+

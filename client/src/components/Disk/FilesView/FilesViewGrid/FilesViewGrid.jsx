@@ -9,6 +9,7 @@ import {
   FilesViewGridFolderIcon,
   FilesViewGridDescription,
   FilesViewCheckbox,
+  FilesViewError,
 } from "../styled";
 
 const FilesViewGrid = ({
@@ -17,6 +18,14 @@ const FilesViewGrid = ({
   activeFolder,
   activeFolderHandler,
 }) => {
+
+
+  if (filesList.length === 0) {
+    return (
+      <FilesViewError><Typography>Файлы не найдены</Typography></FilesViewError>
+    )
+  }
+
 
   return (
     <FilesViewGridContainer>

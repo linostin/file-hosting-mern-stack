@@ -1,17 +1,35 @@
 import axios from "axios";
 import { setFiles, addFile, deleteFileAction } from "../reducers/fileReducer";
-import {addUploadFile, changeUploadFile, showUploader} from "../reducers/uploadReducer";
+import {
+  addUploadFile,
+  changeUploadFile,
+  showUploader,
+} from "../reducers/uploadReducer";
+import { showLoader, hideLoader } from "../reducers/appReducer";
 
-export const getFiles = (dirId) => {
+export const getFiles = (dirId, sort) => {
   // асинхронная функция, которая пареметром принимает dispatch
   return async (dispatch) => {
+    dispatch(showLoader());
+
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/files${dirId ? "?parent=" + dirId : ""}`,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      let url = `http://localhost:5000/api/files`;
+
+      if (dirId) {
+        url = `http://localhost:5000/api/files?parent=${dirId}`;
+      }
+
+      if (sort) {
+        url = `http://localhost:5000/api/files?sort=${sort}`;
+      }
+
+      if (dirId && sort) {
+        url = `http://localhost:5000/api/files?parent=${dirId}&sort=${sort}`;
+      }
+
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
       console.log("file ACTION AXIOS getFiles", response);
       dispatch(setFiles(response.data));
     } catch (error) {
@@ -19,6 +37,8 @@ export const getFiles = (dirId) => {
       console.log(error.response.data.errors);
       console.log("FILE Error - getFiles", error.response);
       // alert(error.response.data.mesage)
+    } finally {
+      dispatch(hideLoader());
     }
   };
 };
@@ -60,9 +80,9 @@ export const uploadFile = (file, dirId) => {
         formData.append("parent", dirId);
       }
 
-      const uploadFile = {name: file.name, progress: 0, id: Date.now()}
-      dispatch(showUploader())
-      dispatch(addUploadFile(uploadFile))
+      const uploadFile = { name: file.name, progress: 0, id: Date.now() };
+      dispatch(showUploader());
+      dispatch(addUploadFile(uploadFile));
 
       const response = await axios.post(
         "http://localhost:5000/api/files/upload",
@@ -76,10 +96,12 @@ export const uploadFile = (file, dirId) => {
                 progressEvent.target.getResponseHeader(
                   "x-decompressed-content-length"
                 );
-            
+
             if (totalLength) {
-              uploadFile.progress = Math.round((progressEvent.loaded * 100) / totalLength)
-              dispatch(changeUploadFile(uploadFile))
+              uploadFile.progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength
+              );
+              dispatch(changeUploadFile(uploadFile));
             }
           },
         }
@@ -95,41 +117,44 @@ export const uploadFile = (file, dirId) => {
   };
 };
 
-
 export async function downloadFile(file) {
-  console.log(file)
-  const response = await fetch(`http://localhost:5000/api/files/download?id=${file._id}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-  })
+  console.log(file);
+  const response = await fetch(
+    `http://localhost:5000/api/files/download?id=${file._id}`,
+    {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    }
+  );
 
   if (response.status === 200) {
     // blob подобный физическому файлу объект, его мы получаем из ответа от сервера
-    const blob = await response.blob()
+    const blob = await response.blob();
     // из blob создаем url
-    const downloadUrl = window.URL.createObjectURL(blob)
+    const downloadUrl = window.URL.createObjectURL(blob);
     // создаем невидимую ссылку
-    const link = document.createElement('a')
-    link.href = downloadUrl
-    link.download = file.name
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.download = file.name;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 }
-  
 
 export const deleteFile = (file) => {
   // асинхронная функция, которая пареметром принимает dispatch
   return async (dispatch) => {
     try {
-
-      const response = await axios.delete(`http://localhost:5000/api/files?id=${file._id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
+      const response = await axios.delete(
+        `http://localhost:5000/api/files?id=${file._id}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
 
       console.log("file ACTION AXIOS deleteFile", response);
       dispatch(deleteFileAction(file._id));
-      alert.response.data.message()
+      alert.response.data.message();
     } catch (error) {
       // console.log(error.response.data.message);
       // console.log(error.response.data.errors);
@@ -138,4 +163,23 @@ export const deleteFile = (file) => {
     }
   };
 };
-    
+
+export function searchFiles(search) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/files/search?search=${search}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(setFiles(response.data));
+    } catch (e) {
+      alert(e?.response?.data?.message);
+    } finally {
+      dispatch(hideLoader());
+    }
+  };
+}

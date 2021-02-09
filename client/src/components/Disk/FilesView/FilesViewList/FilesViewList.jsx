@@ -10,7 +10,9 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import FolderIcon from "@material-ui/icons/Folder";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import { FilesViewListTableCellName } from "../styled";
+import { FilesViewListTableCellName, FilesViewError } from "../styled";
+import SizeFormat from "../../../utils/sizeFormat"
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   table: {
@@ -31,6 +33,14 @@ const FilesViewList = ({
     activeFolderHandler(element._id)
     selectedFilesHandler(element)
   }
+
+
+  if (filesList.length === 0) {
+    return (
+      <FilesViewError><Typography>Файлы не найдены</Typography></FilesViewError>
+    )
+  }
+
 
   return (
     <TableContainer component={Paper}>
@@ -75,7 +85,7 @@ const FilesViewList = ({
                 </FilesViewListTableCellName>
               </TableCell>
               <TableCell align="right">{element.date.slice(0, 10)}</TableCell>
-              <TableCell align="right">{element.size}</TableCell>
+              <TableCell align="right">{SizeFormat(element.size)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

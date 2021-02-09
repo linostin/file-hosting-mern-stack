@@ -8,6 +8,7 @@ import MenuList from "@material-ui/core/MenuList";
 import CheckIcon from "@material-ui/icons/Check";
 import Typography from "@material-ui/core/Typography";
 import ViewListIcon from "@material-ui/icons/ViewList";
+import SortIcon from '@material-ui/icons/Sort';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -15,8 +16,8 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import { MenuTopButtonsWrapper, MenuTopButtonIcon } from "../styled";
 
 export default function MenuListComposition({
-  filesViewTypeHandler,
-  filesViewType,
+  sort,
+  sortFilesHandler,
 }) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -25,13 +26,13 @@ export default function MenuListComposition({
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event, viewTypeButton) => {
+  const handleClose = (event, sortTypeButton) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
 
     setOpen(false);
-    filesViewTypeHandler(viewTypeButton);
+    sortFilesHandler(sortTypeButton);
   };
 
   function handleListKeyDown(event) {
@@ -54,15 +55,14 @@ export default function MenuListComposition({
   return (
     <MenuTopButtonsWrapper>
       <MenuTopButtonIcon>
-        {filesViewType === "list" ? <ViewListIcon fontSize="medium" /> : null}
-        {filesViewType === "grid" ? <ViewModuleIcon fontSize="medium" /> : null}
+        <SortIcon fontSize="medium" />
         <Button
           ref={anchorRef}
           aria-controls={open ? "menu-list-grow" : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          Представление
+          Сортировка
           <ArrowDropDownIcon fontSize="medium" />
         </Button>
       </MenuTopButtonIcon>
@@ -89,27 +89,38 @@ export default function MenuListComposition({
                   id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
                 >
-                  <MenuItem onClick={(event) => handleClose(event, "list")}>
+                  <MenuItem onClick={(event) => handleClose(event, "name")}>
                     <ListItemIcon style={{ minWidth: "30px" }}>
-                      {filesViewType === "list" ? (
+                      {sort === "name" ? (
                         <CheckIcon fontSize="medium" />
                       ) : null}
                     </ListItemIcon>
-                    <ListItemIcon style={{ minWidth: "35px" }}>
+                    {/* <ListItemIcon style={{ minWidth: "35px" }}>
                       <ViewListIcon fontSize="medium" />
-                    </ListItemIcon>
-                    <Typography variant="inherit">Список</Typography>
+                    </ListItemIcon> */}
+                    <Typography variant="inherit">По имени</Typography>
                   </MenuItem>
-                  <MenuItem onClick={(event) => handleClose(event, "grid")}>
-                    <ListItemIcon style={{ minWidth: "30px" }}>
-                      {filesViewType === "grid" ? (
+                  <MenuItem onClick={(event) => handleClose(event, "type")}>
+                  <ListItemIcon style={{ minWidth: "30px" }}>
+                      {sort === "type" ? (
                         <CheckIcon fontSize="medium" />
                       ) : null}
                     </ListItemIcon>
-                    <ListItemIcon style={{ minWidth: "35px" }}>
-                      <ViewModuleIcon fontSize="medium" />
+                    {/* <ListItemIcon style={{ minWidth: "35px" }}>
+                      <ViewListIcon fontSize="medium" />
+                    </ListItemIcon> */}
+                    <Typography variant="inherit">По типу</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={(event) => handleClose(event, "date")}>
+                  <ListItemIcon style={{ minWidth: "30px" }}>
+                      {sort === "date" ? (
+                        <CheckIcon fontSize="medium" />
+                      ) : null}
                     </ListItemIcon>
-                    <Typography variant="inherit">Сетка</Typography>
+                    {/* <ListItemIcon style={{ minWidth: "35px" }}>
+                      <ViewModuleIcon fontSize="medium" />
+                    </ListItemIcon> */}
+                    <Typography variant="inherit">По дате</Typography>
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>

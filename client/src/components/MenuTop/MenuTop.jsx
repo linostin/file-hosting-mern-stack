@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import MenuTopButtons from "./MenuTopButtons/MenuTopButtons";
 import MenuTopViewTypeButton from "./MenuTopButtons/MenuTopViewTypeButton";
+import MenuTopSortButton from "./MenuTopButtons/MenuTopSortButton"
 
 const MenuTop = ({
   checkboxSelectedFiles,
@@ -24,6 +25,8 @@ const MenuTop = ({
   filesViewType,
   openFolder,
   activeFolder,
+  sort,
+  sortFilesHandler,
 }) => {
   const [closeButton, setCloseButton] = useState(false);
 
@@ -62,6 +65,10 @@ const MenuTop = ({
             </IconButton>
           </MenuTopButtonIcon>
         )}
+        <MenuTopSortButton 
+        sort={sort}
+        sortFilesHandler={sortFilesHandler}
+        />
         <MenuTopViewTypeButton
           filesViewTypeHandler={filesViewTypeHandler}
           filesViewType={filesViewType}

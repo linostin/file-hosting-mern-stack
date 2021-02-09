@@ -14,6 +14,7 @@ import MenuTop from "../MenuTop/MenuTop";
 import FilesView from "./FilesView/FilesView";
 import Button from '@material-ui/core/Button';
 import CardMessage from "./Uploader/CardMessage"
+import LoaderCircular from "../LoaderCircular/LoaderCircular"
 
 import "./Styles/style.css";
 
@@ -28,23 +29,20 @@ function Disk() {
   const [filesViewType, setFilesViewType] = useState("list");
   const [openFolder, setOpenFolder] = useState(false);
   const [activeFolder, setActiveFolder] = useState(false);
-  const [uploader, setUploader] = useState(false);
+  const [sort, setSort] = useState('type')
 
   // const isAuth = useSelector((state) => state.user.isAuth);
   const currentDir = useSelector((state) => state.files.currentDir);
   const filesList = useSelector((state) => state.files.files);
   const dirStack = useSelector((state) => state.files.dirStack);
+  const loader = useSelector((state) => state.files.loader)
 
   console.log("fileList", filesList);
   // console.log("currentDir", currentDir);
 
   useEffect(() => {
-    dispatch(getFiles(currentDir));
-  }, [currentDir]);
-
-  const uploaderHandleClick = () => {
-    setUploader(!uploader)
-  }
+    dispatch(getFiles(currentDir, sort));
+  }, [currentDir, sort]);
 
   const popupOpenFunc = () => {
     setPopupOpen(true);
@@ -127,6 +125,10 @@ function Disk() {
     setFilesViewType(viewType);
   };
 
+  const sortFilesHandler = (sortType) => {
+    setSort(sortType)
+  }
+
   const activeFolderHandler = (id) => {
     if (activeFolder === id) {
       setActiveFolder(false);
@@ -134,6 +136,14 @@ function Disk() {
       setActiveFolder(id);
     }
   };
+
+
+  if (loader) {
+    return (
+      <LoaderCircular/>
+    )
+  }
+
 
   return (
     <div
@@ -156,8 +166,10 @@ function Disk() {
         filesViewType={filesViewType}
         openFolder={openFolder}
         activeFolder={activeFolder}
+        sort={sort}
+        sortFilesHandler={sortFilesHandler}
       />
-      <Button variant="contained" onClick={uploaderHandleClick}>Default</Button>
+
       <FilesView
         filesList={filesList}
         filesViewType={filesViewType}
@@ -173,7 +185,6 @@ function Disk() {
         createDirHandler={createDirHandler}
       />
       <CardMessage/>
-      {/* <Uploader /> */}
     </div>
   );
 
