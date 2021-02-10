@@ -8,6 +8,11 @@ export const MenuTopContainer = styled.div`
   width: 100%;
   min-height: 50px;
   border-bottom: 1px solid #edebe9;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background-color: white;
+  z-index: 99999999999999999;
 `;
 
 export const MenuTopButtonsWrapper = styled.div`

@@ -11,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(fileUpload({}))
 app.use(express.json({ extended: true }));
+app.use(express.static('static'))
 
 const authRouter = require("./routes/auth.routes");
 const fileRouter = require("./routes/file.routes");

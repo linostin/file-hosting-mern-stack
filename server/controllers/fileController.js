@@ -4,6 +4,7 @@ const File = require("../models/File");
 const config = require("config");
 const fs = require("fs");
 const { use } = require("../routes/auth.routes");
+const uuid = require("uuid");
 
 class FileController {
   async createDir(req, res) {
@@ -165,14 +166,7 @@ class FileController {
         user: req.user.id,
       });
 
-      const path =
-        config.get("filePath") +
-        "\\" +
-        req.user.id +
-        "\\" +
-        file.path +
-        "\\" +
-        file.name;
+      const path = fileService.getPath(file);
 
       if (fs.existsSync(path)) {
         return res.download(path, file.name);
@@ -220,15 +214,47 @@ class FileController {
 
   async searchFile(req, res) {
     try {
-        const searchName = req.query.search
-        let files = await File.find({user: req.user.id})
-        files = files.filter(file => file.name.includes(searchName))
-        return res.json(files)
+      const searchName = req.query.search;
+      let files = await File.find({ user: req.user.id });
+      files = files.filter((file) => file.name.includes(searchName));
+      return res.json(files);
     } catch (error) {
-        return res.status(400).json({ errors: error.message, message: 'Search error'})
+      return res
+        .status(400)
+        .json({ errors: error.message, message: "Search error" });
     }
-}
+  }
 
+  async uploadAvatar(req, res) {
+    try {
+      const file = req.files.file;
+      const user = await User.findById(req.user.id);
+      const avatarName = uuid.v4() + ".jpeg";
+      file.mv(config.get("staticPath") + "\\" + avatarName);
+      user.avatar = avatarName;
+      await user.save();
+
+      return res.json(user);
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ errors: error.message, message: "Upload avatar error" });
+    }
+  }
+
+  async deleteAvatar(req, res) {
+    try {
+      const user = await User.findById(req.user.id);
+      fs.unlinkSync(config.get("staticPath") + "\\" + user.avatar);
+      await user.save();
+
+      return res.json(user);
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ errors: error.message, message: "Delete avatar error" });
+    }
+  }
 }
 
 module.exports = new FileController();
