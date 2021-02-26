@@ -36,12 +36,15 @@ function Disk() {
   const filesList = useSelector((state) => state.files.files);
   const dirStack = useSelector((state) => state.files.dirStack);
   const loader = useSelector((state) => state.files.loader)
+  const isAuth = useSelector((state) => state.user.isAuth);
 
   console.log("fileList", filesList);
   // console.log("currentDir", currentDir);
 
   useEffect(() => {
-    dispatch(getFiles(currentDir, sort));
+    
+      dispatch(getFiles(currentDir, sort));
+    
   }, [currentDir, sort]);
 
   const popupOpenFunc = () => {

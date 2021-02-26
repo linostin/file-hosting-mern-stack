@@ -13,7 +13,9 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(auth());
+    
+      dispatch(auth());
+    
   }, []);
 
   return (
@@ -24,13 +26,13 @@ function App() {
           <Switch>
             <Route path="/register" component={SignUp} />
             <Route path="/login" component={SignIn} />
-            <Redirect to="/login"/>
+            <Redirect to="/login" />
           </Switch>
         ) : (
           <Switch>
             <Route exact path="/" component={Disk} />
-            <Redirect to="/"/>
-        </Switch>
+            <Redirect to="/" />
+          </Switch>
         )}
       </div>
     </BrowserRouter>
