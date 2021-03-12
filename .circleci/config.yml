@@ -1,19 +1,11 @@
-version: '2.1'
-orbs:
-  node: circleci/node@4.2.0
+version: 2
 jobs:
-  test:
-    executor:
-      name: node/default
-      tag: '15.10'
+  build:
+    docker:
+      - image: circleci/node:15.10    
+      
+    working_directory: ~/file-hosting-mern-stack/server/ 
     steps:
-      - checkout
-      - node/install-packages:
-           app-dir: file-hosting-mern-stack/server/
-
-      - run:
-          command: npm run test
-workflows:
-  test_my_app:
-    jobs:
-      - test
+      - checkout      
+      - run: npm install
+      - run: npm test
