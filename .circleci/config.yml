@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/node:15.10    
       
-    working_directory: ~/file-hosting-mern-stack/server/ 
+    working_directory: ~/server/
     steps:
       - checkout      
       - run: npm install
