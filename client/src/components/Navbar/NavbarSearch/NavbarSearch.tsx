@@ -1,4 +1,5 @@
 import React from "react";
+import { NavbarSearchPropsTypes } from './NavbarSearch.types'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Search = ({ searchName, searchChangeHandler }) => {
+const Search = ({ searchName, searchChangeHandler } : NavbarSearchPropsTypes) => {
 
   const classes = useStyles();
 

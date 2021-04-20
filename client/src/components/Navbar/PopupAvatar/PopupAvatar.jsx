@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+  // import { PopupAvatarPropsTypes } from './PopupAvatar.types'
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -13,8 +14,10 @@ import Slide from "@material-ui/core/Slide";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Avatar from "@material-ui/core/Avatar";
+import { createStyles } from '@material-ui/core';
+// import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const styles = (theme) => ({
+const styles = (theme) => createStyles({
   root: {
     margin: 0,
     padding: theme.spacing(2),
@@ -69,7 +72,7 @@ const PopupAvatar = ({
   createDirHandler,
   uploadAvatarFunc,
   deleteAvatarFunc,
-}) => {
+}: PopupAvatarPropsTypes) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 

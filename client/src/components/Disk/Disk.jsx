@@ -12,9 +12,13 @@ import Popup from "./Popup/Popup";
 import Uploader from "./Uploader/Uploader";
 import MenuTop from "../MenuTop/MenuTop";
 import FilesView from "./FilesView/FilesView";
-import Button from '@material-ui/core/Button';
-import CardMessage from "./Uploader/CardMessage"
-import LoaderCircular from "../LoaderCircular/LoaderCircular"
+import Button from "@material-ui/core/Button";
+import CardMessage from "./Uploader/CardMessage";
+import LoaderCircular from "../LoaderCircular/LoaderCircular";
+
+// new DataTable
+import DataTable from "../DataTable/DataTable/DataTable";
+import { people, propertyNames } from '../DataTable/data/testDataForPagination'
 
 import "./Styles/style.css";
 
@@ -29,22 +33,20 @@ function Disk() {
   const [filesViewType, setFilesViewType] = useState("list");
   const [openFolder, setOpenFolder] = useState(false);
   const [activeFolder, setActiveFolder] = useState(false);
-  const [sort, setSort] = useState('type')
+  const [sort, setSort] = useState("type");
 
   // const isAuth = useSelector((state) => state.user.isAuth);
   const currentDir = useSelector((state) => state.files.currentDir);
   const filesList = useSelector((state) => state.files.files);
   const dirStack = useSelector((state) => state.files.dirStack);
-  const loader = useSelector((state) => state.files.loader)
+  const loader = useSelector((state) => state.files.loader);
   const isAuth = useSelector((state) => state.user.isAuth);
 
   console.log("fileList", filesList);
   // console.log("currentDir", currentDir);
 
   useEffect(() => {
-    
-      dispatch(getFiles(currentDir, sort));
-    
+    dispatch(getFiles(currentDir, sort));
   }, [currentDir, sort]);
 
   const popupOpenFunc = () => {
@@ -62,7 +64,7 @@ function Disk() {
       dispatch(pushToStack(currentDir));
       dispatch(setCurrentDir(id));
       setOpenFolder(true);
-      setActiveFolder(false)
+      setActiveFolder(false);
     }
   };
 
@@ -103,7 +105,7 @@ function Disk() {
 
   const downloadLoadClickHandler = (event) => {
     event.stopPropagation();
-    console.log(selectedFiles)
+    console.log(selectedFiles);
     dispatch(downloadFile(selectedFiles));
   };
 
@@ -129,8 +131,8 @@ function Disk() {
   };
 
   const sortFilesHandler = (sortType) => {
-    setSort(sortType)
-  }
+    setSort(sortType);
+  };
 
   const activeFolderHandler = (id) => {
     if (activeFolder === id) {
@@ -140,13 +142,9 @@ function Disk() {
     }
   };
 
-
   if (loader) {
-    return (
-      <LoaderCircular/>
-    )
+    return <LoaderCircular />;
   }
-
 
   return (
     <div
@@ -182,12 +180,26 @@ function Disk() {
         selectedFilesHandler={selectedFilesHandler}
       />
 
+      <DataTable
+        people={people}
+        propertyNames={propertyNames}
+        selectionType="radio"
+        // stripedRows
+        hoverRow
+        // stickyHeader
+        pointerOnHover
+        selectableRows
+        // showHeader
+        // title="Table Title"
+        dense
+      />
+
       <Popup
         popupOpen={popupOpen}
         popupCloseFunc={popupCloseFunc}
         createDirHandler={createDirHandler}
       />
-      <CardMessage/>
+      <CardMessage />
     </div>
   );
 
