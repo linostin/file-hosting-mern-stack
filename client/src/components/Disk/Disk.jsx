@@ -16,11 +16,14 @@ import Button from "@material-ui/core/Button";
 import CardMessage from "./Uploader/CardMessage";
 import LoaderCircular from "../LoaderCircular/LoaderCircular";
 
+import SideBar from "../DataTable/simple/SideBar";
+
 // new DataTable
 import DataTable from "../DataTable/DataTable/DataTable";
-import { people, propertyNames } from '../DataTable/data/testDataForPagination'
+import { people, propertyNames } from "../DataTable/data/testDataForPagination";
 
 import "./Styles/style.css";
+import * as S from "./styled";
 
 function Disk() {
   const dispatch = useDispatch();
@@ -147,61 +150,86 @@ function Disk() {
   }
 
   return (
-    <div
-      className="disk"
-      onDragEnter={dragEnterHandler}
-      onDragLeave={dragLeaveHandler}
-      onDragOver={dragEnterHandler}
-    >
-      <MenuTop
-        checkboxSelectedFiles={checkboxSelectedFiles.length}
-        checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
-        selectedFilesHandler={selectedFilesHandler}
-        openMenuTop={openMenuTop}
-        backFolderFunc={backFolderFunc}
-        popupOpenFunc={popupOpenFunc}
-        fileUploadFunc={fileUploadFunc}
-        downloadLoadClickHandler={downloadLoadClickHandler}
-        deleteFileClickHandler={deleteFileClickHandler}
-        filesViewTypeHandler={filesViewTypeHandler}
-        filesViewType={filesViewType}
-        openFolder={openFolder}
-        activeFolder={activeFolder}
-        sort={sort}
-        sortFilesHandler={sortFilesHandler}
-      />
-
-      <FilesView
-        filesList={filesList}
-        filesViewType={filesViewType}
-        openFolderFunc={openFolderFunc}
-        activeFolder={activeFolder}
-        activeFolderHandler={activeFolderHandler}
-        selectedFilesHandler={selectedFilesHandler}
-      />
-
-      <DataTable
-        people={people}
-        propertyNames={propertyNames}
-        selectionType="radio"
-        // stripedRows
-        hoverRow
-        // stickyHeader
-        pointerOnHover
-        selectableRows
-        // showHeader
-        // title="Table Title"
-        dense
-      />
-
-      <Popup
-        popupOpen={popupOpen}
-        popupCloseFunc={popupCloseFunc}
-        createDirHandler={createDirHandler}
-      />
-      <CardMessage />
-    </div>
+    <>
+      <S.LeftSideNav>
+        <SideBar />
+      </S.LeftSideNav>
+      <S.RightSideContent>
+        <DataTable
+          people={people}
+          propertyNames={propertyNames}
+          selectionType="radio"
+          // stripedRows
+          hoverRow
+          // stickyHeader
+          pointerOnHover
+          selectableRows
+          // showHeader
+          // title="Table Title"
+          dense
+        />
+      </S.RightSideContent>
+    </>
   );
+
+  //   return (
+  //     <div
+  //       className="disk"
+  //       onDragEnter={dragEnterHandler}
+  //       onDragLeave={dragLeaveHandler}
+  //       onDragOver={dragEnterHandler}
+  //     >
+  //       <MenuTop
+  //         checkboxSelectedFiles={checkboxSelectedFiles.length}
+  //         checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
+  //         selectedFilesHandler={selectedFilesHandler}
+  //         openMenuTop={openMenuTop}
+  //         backFolderFunc={backFolderFunc}
+  //         popupOpenFunc={popupOpenFunc}
+  //         fileUploadFunc={fileUploadFunc}
+  //         downloadLoadClickHandler={downloadLoadClickHandler}
+  //         deleteFileClickHandler={deleteFileClickHandler}
+  //         filesViewTypeHandler={filesViewTypeHandler}
+  //         filesViewType={filesViewType}
+  //         openFolder={openFolder}
+  //         activeFolder={activeFolder}
+  //         sort={sort}
+  //         sortFilesHandler={sortFilesHandler}
+  //       />
+
+  //       <FilesView
+  //         filesList={filesList}
+  //         filesViewType={filesViewType}
+  //         openFolderFunc={openFolderFunc}
+  //         activeFolder={activeFolder}
+  //         activeFolderHandler={activeFolderHandler}
+  //         selectedFilesHandler={selectedFilesHandler}
+  //       />
+
+  //       <DataTable
+  //         people={people}
+  //         propertyNames={propertyNames}
+  //         selectionType="radio"
+  //         // stripedRows
+  //         hoverRow
+  //         // stickyHeader
+  //         pointerOnHover
+  //         selectableRows
+  //         // showHeader
+  //         // title="Table Title"
+  //         dense
+  //       />
+
+  // <SideBar/>
+
+  //       <Popup
+  //         popupOpen={popupOpen}
+  //         popupCloseFunc={popupCloseFunc}
+  //         createDirHandler={createDirHandler}
+  //       />
+  //       <CardMessage />
+  //     </div>
+  //   );
 
   // return ( !dragDropEnter ?
   //   <div className="disk" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>

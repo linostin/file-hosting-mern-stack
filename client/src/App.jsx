@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn/SignIn";
 import { useSelector, useDispatch } from "react-redux";
 import { auth } from "./actions/user";
 import Disk from "./components/Disk/Disk";
+import * as S from "./styled";
 
 function App() {
   const isAuth = useSelector((state) => state.user.isAuth);
@@ -13,28 +14,30 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    
-      dispatch(auth());
-    
+    dispatch(auth());
   }, []);
 
   return (
     <BrowserRouter>
-      <div>
-        <Navbar />
-        {!isAuth ? (
-          <Switch>
-            <Route path="/register" component={SignUp} />
-            <Route path="/login" component={SignIn} />
-            <Redirect to="/login" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/" component={Disk} />
-            <Redirect to="/" />
-          </Switch>
-        )}
-      </div>
+      <S.PageContainer>
+        <S.Header>
+          <Navbar />
+        </S.Header>
+        <S.Content>
+          {!isAuth ? (
+            <Switch>
+              <Route path="/register" component={SignUp} />
+              <Route path="/login" component={SignIn} />
+              <Redirect to="/login" />
+            </Switch>
+          ) : (
+            <Switch>
+              <Route exact path="/" component={Disk} />
+              <Redirect to="/" />
+            </Switch>
+          )}
+        </S.Content>
+      </S.PageContainer>
     </BrowserRouter>
   );
 }
