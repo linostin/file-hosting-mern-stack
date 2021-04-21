@@ -16,7 +16,9 @@ import Button from "@material-ui/core/Button";
 import CardMessage from "./Uploader/CardMessage";
 import LoaderCircular from "../LoaderCircular/LoaderCircular";
 
-import SideBar from "../DataTable/simple/SideBar";
+import SideBar from "../SideBar";
+import List from '../List'
+import { ListData } from '../../data/testDataForList'
 
 // new DataTable
 import DataTable from "../DataTable/DataTable/DataTable";
@@ -152,7 +154,9 @@ function Disk() {
   return (
     <>
       <S.LeftSideNav>
-        <SideBar />
+        <SideBar direction="left">
+          <List data={ListData}/>
+        </SideBar>
       </S.LeftSideNav>
       <S.RightSideContent>
         <DataTable

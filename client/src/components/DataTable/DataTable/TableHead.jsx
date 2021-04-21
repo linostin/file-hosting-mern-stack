@@ -7,7 +7,7 @@ import {
   TableHeadLabelText,
 } from "./styled";
 import * as S from "./styled";
-import { SortIcon } from "../elements/SortIcon/SortIcon";
+import { SortIcon } from "../../SortIcon/SortIcon";
 
 const TableHead = (props) => {
   const { propertyNames, handleClickSort, sortData, selectionType, stickyHeader } = props;

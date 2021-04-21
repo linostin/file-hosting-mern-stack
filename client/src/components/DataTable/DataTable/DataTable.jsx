@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import TableHeader from './TableHeader'
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
-import Pagination from "../simple/Pagination";
+import Pagination from "../../Pagination";
 import { TableContainer, TableStyled } from "./styled";
 import { arrayOfObjectsSort } from "./utils";
-import SearchInput from "../elements/SearchInput/SearchInput";
-import Toolbar from "../simple/Toolbar";
-import Loader from "../elements/Loader";
+import SearchInput from "../../SearchInput/SearchInput";
+import Toolbar from "../../Toolbar";
+import Loader from "../../Loader";
 import * as S from "./styled";
 
 const DataTable = (props) => {
