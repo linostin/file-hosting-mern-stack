@@ -10,6 +10,11 @@ export const ListWrapper = styled.ul`
   padding: 0;
 `;
 
+export const ListItemEmptyBlock = styled.li`
+width: 100%;
+height: 50px;
+`;
+
 export const ListItem = styled.li`
   width: 100%;
   display: flex;
@@ -19,7 +24,7 @@ export const ListItem = styled.li`
   text-decoration: none;
   cursor: pointer;
   padding: 8px 16px 8px 16px;
-  background-color: ${(props) => (props.selected && "red")};
+  background-color: ${(props) => (props.selected && "#e1dfdd")};
   &:hover {
     background-color: #edebe9;
   }

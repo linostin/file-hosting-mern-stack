@@ -17,8 +17,8 @@ const Toolbar = (props) => {
   };
 
   return (
-    <S.ToolbarWrapper direction={getDirection(direction)}>
-      <S.ToolbarMenu>{children}</S.ToolbarMenu>
+    <S.ToolbarWrapper>
+      {children}
     </S.ToolbarWrapper>
   );
 };

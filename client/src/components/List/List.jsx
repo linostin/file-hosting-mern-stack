@@ -13,6 +13,7 @@ const List = (props) => {
 
   return (
     <S.ListWrapper>
+      <S.ListItemEmptyBlock/>
       {data.map((element, index) => (
         <S.ListItem
           key={`el_${index}`}

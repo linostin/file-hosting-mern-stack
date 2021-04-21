@@ -17,7 +17,8 @@ import CardMessage from "./Uploader/CardMessage";
 import LoaderCircular from "../LoaderCircular/LoaderCircular";
 
 import SideBar from "../SideBar";
-import List from '../List'
+import List from '../List';
+import Toolbar from '../Toolbar'
 import { ListData } from '../../data/testDataForList'
 
 // new DataTable
@@ -159,6 +160,7 @@ function Disk() {
         </SideBar>
       </S.LeftSideNav>
       <S.RightSideContent>
+        <Toolbar></Toolbar>
         <DataTable
           people={people}
           propertyNames={propertyNames}
