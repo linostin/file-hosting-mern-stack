@@ -22,10 +22,11 @@ import PhotoIcon from "@material-ui/icons/Photo";
 import { listData } from "../../data/testDataForList";
 // componenst
 import SideMenu from "../DiskComponents/SideMenu";
-import CommandMenu from "../DiskComponents/CommandMenu";
+import CommandMenu from "../simple/CommandMenu";
 import DataTable from "../DataTable/DataTable/DataTable";
 import { people, propertyNames } from "../DataTable/data/testDataForPagination";
 // * import new Composite components block <-->
+import Checkbox from "./../ui/Checkbox";
 
 import "./Styles/style.css";
 import * as S from "./styled";
@@ -160,7 +161,8 @@ function Disk() {
         <SideMenu data={listData} />
       </S.LeftSideNav>
       <S.RightSideContent>
-        <CommandMenu label="test button" icon={<PhotoIcon/>}/>
+        <Checkbox />
+        <CommandMenu label="test button" icon={<PhotoIcon />} />
         <DataTable
           people={people}
           propertyNames={propertyNames}

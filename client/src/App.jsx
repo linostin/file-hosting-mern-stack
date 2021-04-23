@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import SignUp from "./smart/SignUp/SignUp";
-import SignIn from "./smart/SignIn/SignIn";
+import SignUp from "./components/smart/SignUp";
+import SignIn from "./components/smart/SignIn";
 import { useSelector, useDispatch } from "react-redux";
-import { auth } from "./actions/user";
+import { auth } from "./actions/user"
 import Disk from "./components/Disk/Disk";
 import * as S from "./styled";
 
