@@ -8,6 +8,9 @@ import { auth } from "./actions/user";
 import Disk from "./components/Disk/Disk";
 import * as S from "./styled";
 
+import PhotoIcon from "@material-ui/icons/Photo";
+import TopMenu from './components/DiskComponents/TopMenu'
+
 function App() {
   const isAuth = useSelector((state) => state.user.isAuth);
 
@@ -22,6 +25,7 @@ function App() {
       <S.PageContainer>
         <S.Header>
           <Navbar />
+          <TopMenu label="test top" icon={<PhotoIcon/>}/>
         </S.Header>
         <S.Content>
           {!isAuth ? (

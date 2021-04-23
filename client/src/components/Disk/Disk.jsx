@@ -16,14 +16,16 @@ import Button from "@material-ui/core/Button";
 import CardMessage from "./Uploader/CardMessage";
 import LoaderCircular from "../LoaderCircular/LoaderCircular";
 
-import SideBar from "../SideBar";
-import List from '../List';
-import Toolbar from '../Toolbar'
-import { ListData } from '../../data/testDataForList'
-
-// new DataTable
+// * import new Composite components block <-->
+import PhotoIcon from "@material-ui/icons/Photo";
+// data for list
+import { listData } from "../../data/testDataForList";
+// componenst
+import SideMenu from "../DiskComponents/SideMenu";
+import CommandMenu from "../DiskComponents/CommandMenu";
 import DataTable from "../DataTable/DataTable/DataTable";
 import { people, propertyNames } from "../DataTable/data/testDataForPagination";
+// * import new Composite components block <-->
 
 import "./Styles/style.css";
 import * as S from "./styled";
@@ -155,12 +157,10 @@ function Disk() {
   return (
     <>
       <S.LeftSideNav>
-        <SideBar direction="left">
-          <List data={ListData}/>
-        </SideBar>
+        <SideMenu data={listData} />
       </S.LeftSideNav>
       <S.RightSideContent>
-        <Toolbar></Toolbar>
+        <CommandMenu label="test button" icon={<PhotoIcon/>}/>
         <DataTable
           people={people}
           propertyNames={propertyNames}

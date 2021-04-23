@@ -1,11 +1,14 @@
 import React from 'react'
 import * as S from './styled'
 
-const CommandButtonGroup = () => {
+const CommandButtonGroup = (props) => {
+
+  const { children } = props;
+
   return (
-    <S.CommandButtonGroup>
-      
-    </S.CommandButtonGroup>
+    <S.CommandButtonGroupWrapper>
+      {children}
+    </S.CommandButtonGroupWrapper>
   )
 }
 

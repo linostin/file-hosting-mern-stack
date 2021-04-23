@@ -4,7 +4,7 @@ import PhotoIcon from '@material-ui/icons/Photo';
 import ShareIcon from '@material-ui/icons/Share';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-export const ListData = [
+export const listData = [
   { icon: <FolderOpenIcon/>, text: "Все файлы"},
   { icon: <HistoryIcon/>, text: "Недавно измененные"},
   { icon: <PhotoIcon/>, text: "Фото"},
