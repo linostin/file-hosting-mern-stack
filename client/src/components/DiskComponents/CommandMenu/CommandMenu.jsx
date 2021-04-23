@@ -1,9 +1,9 @@
 import React from "react";
 import * as S from "./styled";
 
-import Button from "../../Button";
-import Toolbar from "../../Toolbar";
-import CommandButtonGroup from "../../CommandButtonGroup";
+import Button from "../../ui/Button";
+import Toolbar from "../../simple/Toolbar";
+import CommandButtonGroup from "../../simple/CommandButtonGroup";
 
 const CommandMenu = (props) => {
   const { label, icon } = props;

@@ -1,8 +1,8 @@
 import React from "react";
 import * as S from "./styled";
 
-import List from "../../List";
-import SideBar from "../../SideBar";
+import List from "../../simple/List";
+import SideBar from "../../simple/SideBar";
 
 const SideMenu = (props) => {
   const { data } = props;

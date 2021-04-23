@@ -11,7 +11,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FolderIcon from "@material-ui/icons/Folder";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import { FilesViewListTableCellName, FilesViewError } from "../styled";
-import SizeFormat from "../../../utils/sizeFormat"
+import SizeFormat from "../../../../utils/sizeFormat"
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({

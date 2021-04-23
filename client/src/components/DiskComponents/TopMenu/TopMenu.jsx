@@ -1,10 +1,10 @@
 import React from "react";
 import * as S from "./styled";
 
-import Button from "../../Button";
-import Toolbar from "../../Toolbar";
-import SearchInput from "../../SearchInput";
-import CommandButtonGroup from "../../CommandButtonGroup";
+import Button from "../../ui/Button";
+import Toolbar from "../../simple/Toolbar";
+import SearchInput from "../../ui/SearchInput";
+import CommandButtonGroup from "../../simple/CommandButtonGroup";
 
 const TopMenu = (props) => {
   const { label, icon } = props;
