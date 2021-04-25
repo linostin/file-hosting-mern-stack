@@ -1,6 +1,9 @@
 import React from "react";
 import * as S from "./styled";
 
+import Checkbox from "../../ui/Checkbox";
+import Radio from "../../ui/Radio";
+
 const TableBody = (props) => {
   const {
     filteredData,
@@ -12,17 +15,15 @@ const TableBody = (props) => {
     hoverRow,
     pointerOnHover,
     selectableRows,
-    dense
+    dense,
   } = props;
 
   const getSelectionType = (selectionType) => {
     if (selectionType) {
       if (selectionType === "checkbox") {
-        return (
-          <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-        );
+        return <Checkbox />;
       } else if (selectionType === "radio") {
-        return <input type="radio" id="vehicle2" name="dzen" value="nedzen" />;
+        return <Radio />;
       }
     }
     return null;

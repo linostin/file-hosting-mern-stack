@@ -3,9 +3,9 @@ import * as S from './styled'
 
 const Radio = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <input type="radio" id="vehicle2" name="dzen" value="nedzen" />
+    </>
   )
 }
 

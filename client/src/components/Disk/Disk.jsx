@@ -23,8 +23,8 @@ import { listData } from "../../data/testDataForList";
 // componenst
 import SideMenu from "../DiskComponents/SideMenu";
 import CommandMenu from "../simple/CommandMenu";
-import DataTable from "../DataTable/DataTable/DataTable";
-import { people, propertyNames } from "../DataTable/data/testDataForPagination";
+import DataTable from "../smart/DataTable/DataTable";
+import { people, propertyNames } from "../../data/testDataForPagination";
 // * import new Composite components block <-->
 import Checkbox from "./../ui/Checkbox";
 
@@ -156,100 +156,80 @@ function Disk() {
   }
 
   return (
-    <>
-      <S.LeftSideNav>
-        <SideMenu data={listData} />
-      </S.LeftSideNav>
-      <S.RightSideContent>
-        <Checkbox/>
-        <CommandMenu label="test button" icon={<PhotoIcon />} />
-        <DataTable
-          people={people}
-          propertyNames={propertyNames}
-          selectionType="radio"
-          // stripedRows
-          hoverRow
-          // stickyHeader
-          pointerOnHover
-          selectableRows
-          // showHeader
-          // title="Table Title"
-          dense
-        />
-      </S.RightSideContent>
-    </>
+    <div
+      className="disk"
+      onDragEnter={dragEnterHandler}
+      onDragLeave={dragLeaveHandler}
+      onDragOver={dragEnterHandler}
+    >
+      <MenuTop
+        checkboxSelectedFiles={checkboxSelectedFiles.length}
+        checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
+        selectedFilesHandler={selectedFilesHandler}
+        openMenuTop={openMenuTop}
+        backFolderFunc={backFolderFunc}
+        popupOpenFunc={popupOpenFunc}
+        fileUploadFunc={fileUploadFunc}
+        downloadLoadClickHandler={downloadLoadClickHandler}
+        deleteFileClickHandler={deleteFileClickHandler}
+        filesViewTypeHandler={filesViewTypeHandler}
+        filesViewType={filesViewType}
+        openFolder={openFolder}
+        activeFolder={activeFolder}
+        sort={sort}
+        sortFilesHandler={sortFilesHandler}
+      />
+
+      <FilesView
+        filesList={filesList}
+        filesViewType={filesViewType}
+        openFolderFunc={openFolderFunc}
+        activeFolder={activeFolder}
+        activeFolderHandler={activeFolderHandler}
+        selectedFilesHandler={selectedFilesHandler}
+      />
+
+      <DataTable
+        people={people}
+        propertyNames={propertyNames}
+        selectionType="radio"
+        // stripedRows
+        hoverRow
+        // stickyHeader
+        pointerOnHover
+        selectableRows
+        // showHeader
+        // title="Table Title"
+        dense
+      />
+
+      <Popup
+        popupOpen={popupOpen}
+        popupCloseFunc={popupCloseFunc}
+        createDirHandler={createDirHandler}
+      />
+      <CardMessage />
+    </div>
   );
 
-  //   return (
-  //     <div
-  //       className="disk"
-  //       onDragEnter={dragEnterHandler}
-  //       onDragLeave={dragLeaveHandler}
-  //       onDragOver={dragEnterHandler}
-  //     >
-  //       <MenuTop
-  //         checkboxSelectedFiles={checkboxSelectedFiles.length}
-  //         checkboxSelectedFilesHandler={checkboxSelectedFilesHandler}
-  //         selectedFilesHandler={selectedFilesHandler}
-  //         openMenuTop={openMenuTop}
-  //         backFolderFunc={backFolderFunc}
-  //         popupOpenFunc={popupOpenFunc}
-  //         fileUploadFunc={fileUploadFunc}
-  //         downloadLoadClickHandler={downloadLoadClickHandler}
-  //         deleteFileClickHandler={deleteFileClickHandler}
-  //         filesViewTypeHandler={filesViewTypeHandler}
-  //         filesViewType={filesViewType}
-  //         openFolder={openFolder}
-  //         activeFolder={activeFolder}
-  //         sort={sort}
-  //         sortFilesHandler={sortFilesHandler}
-  //       />
-
-  //       <FilesView
-  //         filesList={filesList}
-  //         filesViewType={filesViewType}
-  //         openFolderFunc={openFolderFunc}
-  //         activeFolder={activeFolder}
-  //         activeFolderHandler={activeFolderHandler}
-  //         selectedFilesHandler={selectedFilesHandler}
-  //       />
-
-  //       <DataTable
-  //         people={people}
-  //         propertyNames={propertyNames}
-  //         selectionType="radio"
-  //         // stripedRows
-  //         hoverRow
-  //         // stickyHeader
-  //         pointerOnHover
-  //         selectableRows
-  //         // showHeader
-  //         // title="Table Title"
-  //         dense
-  //       />
-
-  // <SideBar/>
-
-  //       <Popup
-  //         popupOpen={popupOpen}
-  //         popupCloseFunc={popupCloseFunc}
-  //         createDirHandler={createDirHandler}
-  //       />
-  //       <CardMessage />
-  //     </div>
-  //   );
-
-  // return ( !dragDropEnter ?
-  //   <div className="disk" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
+  // return !dragDropEnter ? (
+  //   <div
+  //     className="disk"
+  //     onDragEnter={dragEnterHandler}
+  //     onDragLeave={dragLeaveHandler}
+  //     onDragOver={dragEnterHandler}
+  //   >
   //     <div className="disk__btns">
-  //       <button className="disk__back" onClick={backFolderFunc}>Назад</button>
+  //       <button className="disk__back" onClick={backFolderFunc}>
+  //         Назад
+  //       </button>
   //       <button className="disk__create" onClick={() => popupOpenFunc()}>
   //         Создать папку
   //       </button>
   //       <button className="disk__create" onClick={() => popupOpenFunc()}>
   //         Тест popup
   //       </button>
-  //       <UploadButton fileUploadFunc={fileUploadFunc}/>
+  //       <UploadButton fileUploadFunc={fileUploadFunc} />
   //     </div>
   //     {/* <FileList filesList={filesList} openFolderFunc={openFolderFunc} downloadLoadClickHandler={downloadLoadClickHandler} deleteFileClickHandler={deleteFileClickHandler}/> */}
   //     <Popup
@@ -257,10 +237,16 @@ function Disk() {
   //       popupCloseFunc={popupCloseFunc}
   //       createDirHandler={createDirHandler}
   //     />
-  //     <Uploader/>
+  //     <Uploader />
   //   </div>
-  //   :
-  //   <div className="drag__and__drop" onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
+  // ) : (
+  //   <div
+  //     className="drag__and__drop"
+  //     onDrop={dropHandler}
+  //     onDragEnter={dragEnterHandler}
+  //     onDragLeave={dragLeaveHandler}
+  //     onDragOver={dragEnterHandler}
+  //   >
   //     Перетащите файлы сюда
   //   </div>
   // );

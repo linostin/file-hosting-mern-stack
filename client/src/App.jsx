@@ -8,6 +8,8 @@ import { auth } from "./actions/user"
 import Disk from "./components/Disk/Disk";
 import * as S from "./styled";
 
+import FilesPage from './pages/Files'
+
 import PhotoIcon from "@material-ui/icons/Photo";
 import TopMenu from './components/DiskComponents/TopMenu'
 
@@ -36,7 +38,8 @@ function App() {
             </Switch>
           ) : (
             <Switch>
-              <Route exact path="/" component={Disk} />
+              {/* <Route exact path="/" component={Disk} /> */}
+              <Route exact path="/" component={FilesPage} />
               <Redirect to="/" />
             </Switch>
           )}
