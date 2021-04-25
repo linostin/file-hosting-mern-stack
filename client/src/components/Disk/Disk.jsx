@@ -161,7 +161,7 @@ function Disk() {
         <SideMenu data={listData} />
       </S.LeftSideNav>
       <S.RightSideContent>
-        <Checkbox />
+        <Checkbox/>
         <CommandMenu label="test button" icon={<PhotoIcon />} />
         <DataTable
           people={people}

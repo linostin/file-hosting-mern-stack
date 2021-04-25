@@ -1,50 +1,48 @@
 import styled, { css } from "styled-components/macro";
 
-export const CheckboxContainer = styled.label`
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 2rem;
+export const CheckboxContainer = styled.label``;
+
+export const Label = styled.span`
+  margin-left: 5px;
 `;
 
-export const Checkbox = styled.span`
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export const Icon = styled.svg`
+  fill: none;
+  stroke: white;
+  stroke-width: 2px;
 `;
 
-export const Label = styled.span``;
+export const Checkbox = styled.div`
+  display: inline-block;
+  vertical-align: middle;
+`;
 
-// Hide the browser's default checkbox
-export const CheckboxInput = styled.input`
+export const HiddenCheckbox = styled.input.attrs({ type: "checkbox" })`
+  // Hide checkbox visually but remain accessible to screen readers.
+  // Source: https://polished.js.org/docs/#hidevisually
+  border: 0;
+  clip: rect(0 0 0 0);
+  clippath: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
   position: absolute;
-  overflow: hidden;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  opacity: 0;
-  cursor: inherit;
+  white-space: nowrap;
+  width: 1px;
 `;
 
-// Create a custom checkbox
-export const CheckboxControl = styled.span`
-  display: inline-flex;
-  position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  overflow: hidden;
-  width: 1em;
-  height: 1em;
-  border-radius: 0.25em;
-  border: 0.1em solid currentColor;
-  cursor: inherit;
+export const StyledCheckbox = styled.div`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: ${(props) => (props.checked ? "salmon" : "papayawhip")};
+  border-radius: 3px;
+  transition: all 150ms;
+  ${HiddenCheckbox}:focus + & {
+    box-shadow: 0 0 0 3px pink;
+  }
+  ${Icon} {
+    visibility: ${(props) => (props.checked ? "visible" : "hidden")};
+  } ;
 `;
