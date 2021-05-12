@@ -10,7 +10,7 @@ const SideMenu = (props) => {
   return (
     <S.SideMenuContainer>
       <SideBar direction="left">
-        <List data={data} />
+        <List marginTop="50px" data={data} />
       </SideBar>
     </S.SideMenuContainer>
   );

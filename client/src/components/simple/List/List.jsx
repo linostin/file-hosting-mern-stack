@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import * as S from "./styled";
 
 const List = (props) => {
-  const { data } = props;
+  const { data, marginTop } = props;
 
   const [selectedListItem, setSelectedListItem] = useState();
 
   const handleClick = (index) => {
     setSelectedListItem(index);
-
   };
 
   return (
-    <S.ListWrapper>
-      <S.ListItemEmptyBlock/>
+    <S.ListWrapper marginTop={marginTop}>
       {data.map((element, index) => (
         <S.ListItem
           key={`el_${index}`}

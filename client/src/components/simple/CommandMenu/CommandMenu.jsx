@@ -16,48 +16,52 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import Button from "../../ui/Button";
 import Toolbar from "../Toolbar";
 import Dropdown from "../Dropdown/";
-import { TrainRounded } from "@material-ui/icons";
+import List from "../List";
+
+const listDataUploadDropdown = [
+  { text: "Все файлы" },
+  { text: "Недавно измененные" },
+];
 
 const CommandMenu = (props) => {
-  const { label, startIcon } = props;
+  // const { selected } = props;
 
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  const handleShowDropdown = () => {
-    setShowDropdown(!showDropdown);
-    console.log(showDropdown);
-    console.log("showDropdown");
-  };
+  const selected = true;
 
   return (
     <S.CommandMenuContainer>
-      <Toolbar>
-        <S.ButtonGroupWrapper>
-          <Button
-            action={handleShowDropdown}
-            label="New"
-            startIcon={<CreateNewFolderIcon />}
-          />
-          <Dropdown
-            showDropdown={showDropdown}
-            dropdownButton={
-              <Button
-                action={handleShowDropdown}
-                label="Upload"
-                startIcon={<PublishIcon />}
-                endIcon={<ArrowDropDownIcon />}
-              />
-            }
-          >
+      {selected ? (
+        <Toolbar>
+          <S.ButtonGroupWrapper>
+            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
+            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
+            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
+            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
+            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
+          </S.ButtonGroupWrapper>
+          <S.ButtonGroupWrapper>
             <Button label="Sort" startIcon={<SortIcon />} />
             <Button label="View" startIcon={<ViewModuleIcon />} />
-          </Dropdown>
-        </S.ButtonGroupWrapper>
-        <S.ButtonGroupWrapper>
-          <Button label="Sort" startIcon={<SortIcon />} />
-          <Button label="View" startIcon={<ViewModuleIcon />} />
-        </S.ButtonGroupWrapper>
-      </Toolbar>
+          </S.ButtonGroupWrapper>
+        </Toolbar>
+      ) : (
+        <Toolbar>
+          <S.ButtonGroupWrapper>
+            <Button label="New" startIcon={<CreateNewFolderIcon />} />
+            <Dropdown
+              label="Upload"
+              startIcon={<PublishIcon />}
+              endIcon={<ArrowDropDownIcon />}
+            >
+              <List data={listDataUploadDropdown} />
+            </Dropdown>
+          </S.ButtonGroupWrapper>
+          <S.ButtonGroupWrapper>
+            <Button label="Sort" startIcon={<SortIcon />} />
+            <Button label="View" startIcon={<ViewModuleIcon />} />
+          </S.ButtonGroupWrapper>
+        </Toolbar>
+      )}
     </S.CommandMenuContainer>
   );
 };

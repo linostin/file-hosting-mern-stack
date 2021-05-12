@@ -8,15 +8,12 @@ export const ListWrapper = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
-`;
-
-export const ListItemEmptyBlock = styled.li`
-width: 100%;
-height: 50px;
+  margin-top: ${(props) => (props.marginTop || 0)};
 `;
 
 export const ListItem = styled.li`
   width: 100%;
+  height: ${(props) => (props.height || null)};
   display: flex;
   flex-direction: row;
   align-items: center;
