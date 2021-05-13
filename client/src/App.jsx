@@ -9,6 +9,7 @@ import Disk from "./components/Disk/Disk";
 import * as S from "./styled";
 
 import FilesPage from './pages/Files'
+import FilesLogic from './pages/Files/FilesLogic'
 
 import PhotoIcon from "@material-ui/icons/Photo";
 import TopMenu from './components/DiskComponents/TopMenu'
@@ -26,7 +27,7 @@ function App() {
     <BrowserRouter>
       <S.PageContainer>
         <S.Header>
-          <Navbar />
+          {/* <Navbar /> */}
           <TopMenu label="test top" icon={<PhotoIcon/>}/>
         </S.Header>
         <S.Content>
@@ -39,7 +40,7 @@ function App() {
           ) : (
             <Switch>
               {/* <Route exact path="/" component={Disk} /> */}
-              <Route exact path="/" component={FilesPage} />
+              <Route exact path="/" component={FilesLogic} />
               <Redirect to="/" />
             </Switch>
           )}

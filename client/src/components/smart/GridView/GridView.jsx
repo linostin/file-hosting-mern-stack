@@ -6,6 +6,8 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import Typography from "@material-ui/core/Typography";
 import Checkbox from "@material-ui/core/Checkbox";
 
+import CheckboxNew from '../../ui/Checkbox'
+
 const GridView = (props) => {
   const {
     data,
@@ -34,11 +36,12 @@ const GridView = (props) => {
             <S.GridViewCheckbox
               active={element._id === activeFolder ? true : false}
             >
-              <Checkbox
+              {/* <Checkbox
                 size="small"
                 onClick={() => activeFolderHandler(element._id)}
                 checked={element._id === activeFolder ? true : false}
-              />
+              /> */}
+              <CheckboxNew/>
             </S.GridViewCheckbox>
             <S.GridViewGridFolderIcon
               onClick={(event) =>

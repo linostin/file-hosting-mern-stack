@@ -8,6 +8,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from '@material-ui/icons/Close';
 import SortIcon from "@material-ui/icons/Sort";
 import PublishIcon from "@material-ui/icons/Publish";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
@@ -33,15 +34,13 @@ const CommandMenu = (props) => {
       {selected ? (
         <Toolbar>
           <S.ButtonGroupWrapper>
-            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
-            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
-            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
-            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
-            <S.ButtonCommandMenu label="New" startIcon={<CreateNewFolderIcon />} />
+            <S.ButtonCommandMenu label="Share" startIcon={<ShareIcon />} />
+            <S.ButtonCommandMenu label="Download" startIcon={<GetAppIcon />} />
+            <S.ButtonCommandMenu label="Delete" startIcon={<DeleteIcon />} />
+            <S.ButtonCommandMenu label="Rename" startIcon={<EditIcon />} />
           </S.ButtonGroupWrapper>
           <S.ButtonGroupWrapper>
-            <Button label="Sort" startIcon={<SortIcon />} />
-            <Button label="View" startIcon={<ViewModuleIcon />} />
+            <S.ButtonCommandMenu label="Selected" endIcon={<CloseIcon />} />
           </S.ButtonGroupWrapper>
         </Toolbar>
       ) : (

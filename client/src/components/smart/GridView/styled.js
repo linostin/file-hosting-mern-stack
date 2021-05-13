@@ -5,13 +5,18 @@ export const GridViewContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  margin-top: 5px;
+  /* height: 100%; */
+  padding-top: 20px;
+  padding-left: 32px;
+  padding-right: 32px;
 `;
 
 export const GridViewCheckbox = styled.div`
   position: absolute;
   right: 5px;
   top: 5px;
+  margin: 0;
+  padding: 0;
   display: ${(props) => (props.active ? "block" : "none")};
 `;
 
