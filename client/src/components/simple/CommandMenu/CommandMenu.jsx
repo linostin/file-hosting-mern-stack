@@ -8,11 +8,12 @@ import ShareIcon from "@material-ui/icons/Share";
 import CreateNewFolderIcon from "@material-ui/icons/CreateNewFolder";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from "@material-ui/icons/Close";
 import SortIcon from "@material-ui/icons/Sort";
 import PublishIcon from "@material-ui/icons/Publish";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
 import Button from "../../ui/Button";
 import Toolbar from "../Toolbar";
@@ -25,15 +26,24 @@ const listDataUploadDropdown = [
 ];
 
 const CommandMenu = (props) => {
-  // const { selected } = props;
+  const { modalHandler, goBackFolderHandler } = props;
 
-  const selected = true;
+  const selected = false;
+
+  const tetsButtonClick = () => {
+    console.log("Test Button Click");
+  };
 
   return (
     <S.CommandMenuContainer>
       {selected ? (
         <Toolbar>
           <S.ButtonGroupWrapper>
+            <S.ButtonCommandMenu
+              label="Back"
+              startIcon={<KeyboardBackspaceIcon />}
+              onClick={goBackFolderHandler}
+            />
             <S.ButtonCommandMenu label="Share" startIcon={<ShareIcon />} />
             <S.ButtonCommandMenu label="Download" startIcon={<GetAppIcon />} />
             <S.ButtonCommandMenu label="Delete" startIcon={<DeleteIcon />} />
@@ -46,18 +56,31 @@ const CommandMenu = (props) => {
       ) : (
         <Toolbar>
           <S.ButtonGroupWrapper>
-            <Button label="New" startIcon={<CreateNewFolderIcon />} />
-            <Dropdown
+            <S.ButtonCommandMenu
+              label="Back"
+              startIcon={<KeyboardBackspaceIcon />}
+              onClick={goBackFolderHandler}
+            />
+            <S.ButtonCommandMenu
+              label="New"
+              startIcon={<CreateNewFolderIcon />}
+            />
+            <S.ButtonCommandMenu
+              label="Modal"
+              startIcon={<OpenInNewIcon />}
+              onClick={modalHandler}
+            />
+            {/* <Dropdown
               label="Upload"
               startIcon={<PublishIcon />}
               endIcon={<ArrowDropDownIcon />}
             >
               <List data={listDataUploadDropdown} />
-            </Dropdown>
+            </Dropdown> */}
           </S.ButtonGroupWrapper>
           <S.ButtonGroupWrapper>
-            <Button label="Sort" startIcon={<SortIcon />} />
-            <Button label="View" startIcon={<ViewModuleIcon />} />
+            <S.ButtonCommandMenu label="Sort" startIcon={<SortIcon />} />
+            <S.ButtonCommandMenu label="View" startIcon={<ViewModuleIcon />} />
           </S.ButtonGroupWrapper>
         </Toolbar>
       )}

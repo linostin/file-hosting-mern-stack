@@ -11,9 +11,9 @@ import CheckboxNew from '../../ui/Checkbox'
 const GridView = (props) => {
   const {
     data,
-    openFolderFunc,
     activeFolder,
     activeFolderHandler,
+    openFolderHandler,
   } = props;
 
   if (data.length === 0) {
@@ -45,7 +45,7 @@ const GridView = (props) => {
             </S.GridViewCheckbox>
             <S.GridViewGridFolderIcon
               onClick={(event) =>
-                openFolderFunc(event, element._id, element.type)
+                openFolderHandler(event, element._id, element.type, element.name)
               }
             >
               {element.type === "dir" ? (

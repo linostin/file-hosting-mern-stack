@@ -8,7 +8,7 @@ import {
 import { showLoader, hideLoader } from "../reducers/appReducer";
 
 export const getFiles = (dirId, sort) => {
-  // асинхронная функция, которая пареметром принимает dispatch
+  // асинхронная функция, которая параметром принимает dispatch
   return async (dispatch) => {
     dispatch(showLoader());
 

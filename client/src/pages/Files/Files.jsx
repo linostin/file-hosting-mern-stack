@@ -7,13 +7,35 @@ import { listData } from "../../data/testDataForList";
 // componenst
 import SideMenu from "../../components/DiskComponents/SideMenu";
 import CommandMenu from "../../components/simple/CommandMenu";
+import FolderNamePath from "../../components/simple/FolderNamePath";
+// import Toolbar from '../../components/simple/Toolbar'
 import DataTable from "../../components/smart/DataTable/DataTable";
 import GridView from "../../components/smart/GridView/GridView";
 import Loader from "../../components/simple/Loader";
+import Modal from "../../components/simple/Modal";
 import { people, propertyNames } from "../../data/testDataForPagination";
 
 const FilesPage = (props) => {
-  const { data, loader } = props;
+  const {
+    loader,
+    data,
+    isModal,
+    viewType,
+    itemsSelected,
+    modalHandler,
+    activeFolder,
+    openFolder,
+    activeFolderHandler,
+    openFolderHandler,
+    createFolderHandler,
+    goBackFolderHandler,
+    fileUploadHandler,
+    fileDownloadHandler,
+    fileDeleteHandler,
+    itemsSelectHandler,
+    viewTypeHandler,
+  } = props;
+
   let gridOn = true;
 
   // let loading = loader;
@@ -30,9 +52,20 @@ const FilesPage = (props) => {
         </S.RightSideLoader>
       ) : (
         <S.RightSideContent>
-          <CommandMenu label="test button" startIcon={<PhotoIcon />} />
+          <CommandMenu
+            label="test button"
+            startIcon={<PhotoIcon />}
+            modalHandler={modalHandler}
+            goBackFolderHandler={goBackFolderHandler}
+          />
+          <FolderNamePath></FolderNamePath>
           {gridOn ? (
-            <GridView data={data} />
+            <GridView
+              data={data}
+              activeFolder={activeFolder}
+              activeFolderHandler={activeFolderHandler}
+              openFolderHandler={openFolderHandler}
+            />
           ) : (
             <DataTable
               people={people}
@@ -50,6 +83,7 @@ const FilesPage = (props) => {
           )}
         </S.RightSideContent>
       )}
+      {isModal && <Modal />}
     </>
   );
 };
