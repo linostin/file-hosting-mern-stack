@@ -18,6 +18,7 @@ export const ButtonGroupWrapper = styled.div`
     }
   }; */
   height: 100%;
+  display: flex;
 `;
 
 

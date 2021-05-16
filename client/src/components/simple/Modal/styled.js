@@ -31,7 +31,6 @@ export const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.25);
-  animation: ${appear} 300ms;
 `;
 
 export const Dialog = styled.div`
@@ -46,7 +45,6 @@ export const Dialog = styled.div`
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  animation: ${slide} 0.5s;
 `;
 
 export const Header = styled.div`
@@ -55,6 +53,10 @@ export const Header = styled.div`
   padding: 1rem;
   border-bottom: 1px solid #dbdbdb;
   justify-content: space-between;
+`;
+
+export const Close = styled.div`
+cursor: pointer;
 `;
 
 export const Title = styled.div``;

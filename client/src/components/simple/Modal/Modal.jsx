@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import CloseIcon from '@material-ui/icons/Close';
 import * as S from "./styled";
 
 const Modal = (props) => {
@@ -23,9 +24,7 @@ const Modal = (props) => {
       <S.Dialog onClick={e => e.stopPropagation()}>
         <S.Header>
           <S.Title>{title}</S.Title>
-          <span className="modal-close" onClick={onClose}>
-            &times;
-          </span>
+          <S.Close onClick={onClose}><CloseIcon/></S.Close>
         </S.Header>
         <S.Body>
           <S.Content>{content}</S.Content>

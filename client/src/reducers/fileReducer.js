@@ -3,23 +3,19 @@
 const SET_FILES = "SET_FILES";
 const SET_CURRENT_DIR = "SET_CURRENT_DIR";
 const ADD_FILE = "ADD_FILE";
-const PUSH_TO_STACK = "PUSH_TO_STACK"
+const PUSH_TO_STACK = "PUSH_TO_STACK";
 const DELETE_FILE = "DELETE_FILE";
-const PUSH_TO_FOLDER_PATH = "PUSH_TO_FOLDER_PATH"
-const DELETE_FROM_FOLDER_PATH = "DELETE_FROM_FOLDER_PATH"
-
+const PUSH_TO_FOLDER_PATH = "PUSH_TO_FOLDER_PATH";
+const DELETE_FROM_FOLDER_PATH = "DELETE_FROM_FOLDER_PATH";
 
 const defaultState = {
   files: [],
   currentDir: null,
   dirStack: [],
-  folderPath : [],
+  folderPath: [],
 };
 
-
-
 export default function fileReducer(state = defaultState, action) {
-
   // ? возможно добавить immer.js
 
   switch (action.type) {
@@ -43,34 +39,40 @@ export default function fileReducer(state = defaultState, action) {
         ...state,
         files: [...state.files, action.payload],
       };
-      
+
     case PUSH_TO_STACK:
       console.log("REDUCER: PUSH_TO_STACK action.payload: ", action.payload);
       return {
         ...state,
         dirStack: [...state.dirStack, action.payload],
-      }
+      };
 
-      case DELETE_FILE:
+    case DELETE_FILE:
       console.log("REDUCER: DELETE_FILE action.payload: ", action.payload);
       return {
         ...state,
-        files: [...state.files.filter(file => file._id !== action.payload)],
-      }
+        files: [...state.files.filter((file) => file._id !== action.payload)],
+      };
 
-      case PUSH_TO_FOLDER_PATH:
-        console.log("REDUCER: PUSH_TO_FOLDER_PATH action.payload: ", action.payload);
-        return {
-          ...state,
-          folderPath: [...state.folderPath, action.payload],
-        }
+    case PUSH_TO_FOLDER_PATH:
+      console.log(
+        "REDUCER: PUSH_TO_FOLDER_PATH action.payload: ",
+        action.payload
+      );
+      return {
+        ...state,
+        folderPath: [...state.folderPath, action.payload],
+      };
 
-        case DELETE_FROM_FOLDER_PATH:
-          console.log("REDUCER: DELETE_FROM_FOLDER_PATH action.payload: ", action.payload);
-          return {
-            ...state,
-            folderPath: [...state.folderPath].slice(0,-1),
-          }
+    case DELETE_FROM_FOLDER_PATH:
+      console.log(
+        "REDUCER: DELETE_FROM_FOLDER_PATH action.payload: ",
+        action.payload
+      );
+      return {
+        ...state,
+        folderPath: [...state.folderPath].slice(0, -1),
+      };
 
     default:
       return state;

@@ -13,7 +13,7 @@ import SortIcon from "@material-ui/icons/Sort";
 import PublishIcon from "@material-ui/icons/Publish";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 
 import Button from "../../ui/Button";
 import Toolbar from "../Toolbar";
@@ -21,6 +21,11 @@ import Dropdown from "../Dropdown/";
 import List from "../List";
 
 const listDataUploadDropdown = [
+  { text: "Все файлы" },
+  { text: "Недавно измененные" },
+];
+
+const listDataSortDropdown = [
   { text: "Все файлы" },
   { text: "Недавно измененные" },
 ];
@@ -62,24 +67,29 @@ const CommandMenu = (props) => {
               onClick={goBackFolderHandler}
             />
             <S.ButtonCommandMenu
-              label="New"
+              label="New Folder"
               startIcon={<CreateNewFolderIcon />}
-            />
-            <S.ButtonCommandMenu
-              label="Modal"
-              startIcon={<OpenInNewIcon />}
               onClick={() => modalHandler(true)}
             />
-            {/* <Dropdown
-              label="Upload"
-              startIcon={<PublishIcon />}
-              endIcon={<ArrowDropDownIcon />}
+            <Dropdown
+              button={
+                <S.ButtonCommandMenu
+                  label="New Folder"
+                  startIcon={<CreateNewFolderIcon />}
+                />
+              }
             >
               <List data={listDataUploadDropdown} />
-            </Dropdown> */}
+            </Dropdown>
           </S.ButtonGroupWrapper>
           <S.ButtonGroupWrapper>
-            <S.ButtonCommandMenu label="Sort" startIcon={<SortIcon />} />
+            <Dropdown
+              button={
+                <S.ButtonCommandMenu label="Sort" startIcon={<SortIcon />} />
+              }
+            >
+              <List data={listDataUploadDropdown} />
+            </Dropdown>
             <S.ButtonCommandMenu label="View" startIcon={<ViewModuleIcon />} />
           </S.ButtonGroupWrapper>
         </Toolbar>
