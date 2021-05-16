@@ -22,6 +22,7 @@ const FilesPage = (props) => {
     isModal,
     viewType,
     itemsSelected,
+    folderPath,
     modalHandler,
     activeFolder,
     openFolder,
@@ -58,7 +59,7 @@ const FilesPage = (props) => {
             modalHandler={modalHandler}
             goBackFolderHandler={goBackFolderHandler}
           />
-          <FolderNamePath></FolderNamePath>
+          <FolderNamePath data={folderPath}/>
           {gridOn ? (
             <GridView
               data={data}

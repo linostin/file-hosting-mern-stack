@@ -7,7 +7,7 @@ import {
   downloadFile,
   deleteFile,
 } from "../../actions/file";
-import { setCurrentDir, pushToStack } from "../../reducers/fileReducer";
+import { setCurrentDir, pushToStack, pushToFolderPath, deleteFromFolderPath } from "../../reducers/fileReducer";
 
 // import components
 import FilesPage from "./Files";
@@ -28,6 +28,7 @@ const FilesLogic = () => {
   const currentDir = useSelector((state) => state.files.currentDir);
   const filesList = useSelector((state) => state.files.files);
   const dirStack = useSelector((state) => state.files.dirStack);
+  const folderPath = useSelector((state) => state.files.folderPath)
   const loader = useSelector((state) => state.app.loader);
   console.log("dirStack", dirStack)
 
@@ -65,8 +66,7 @@ const FilesLogic = () => {
       dispatch(setCurrentDir(id));
       setOpenFolder(true);
       setActiveFolder(false);
-      setFolderNamePath(name)
-      console.log("folderNamePath", folderNamePath)
+      dispatch(pushToFolderPath(name));
     }
   };
 
@@ -78,6 +78,7 @@ const FilesLogic = () => {
   const goBackFolderHandler = () => {
     console.log("Go Back Folder Func");
     const backDirId = dirStack.pop();
+    dispatch(deleteFromFolderPath());
     dispatch(setCurrentDir(backDirId));
     setOpenFolder(false);
   };
@@ -111,6 +112,7 @@ const FilesLogic = () => {
       itemsSelected={itemsSelected}
       activeFolder={activeFolder}
       openFolder={openFolder}
+      folderPath={folderPath}
       modalHandler={modalHandler}
       activeFolderHandler={activeFolderHandler}
       openFolderHandler={openFolderHandler}

@@ -4,13 +4,16 @@ const SET_FILES = "SET_FILES";
 const SET_CURRENT_DIR = "SET_CURRENT_DIR";
 const ADD_FILE = "ADD_FILE";
 const PUSH_TO_STACK = "PUSH_TO_STACK"
-const DELETE_FILE = "DELETE_FILE" 
+const DELETE_FILE = "DELETE_FILE";
+const PUSH_TO_FOLDER_PATH = "PUSH_TO_FOLDER_PATH"
+const DELETE_FROM_FOLDER_PATH = "DELETE_FROM_FOLDER_PATH"
 
 
 const defaultState = {
   files: [],
   currentDir: null,
-  dirStack: []
+  dirStack: [],
+  folderPath : [],
 };
 
 
@@ -55,6 +58,20 @@ export default function fileReducer(state = defaultState, action) {
         files: [...state.files.filter(file => file._id !== action.payload)],
       }
 
+      case PUSH_TO_FOLDER_PATH:
+        console.log("REDUCER: PUSH_TO_FOLDER_PATH action.payload: ", action.payload);
+        return {
+          ...state,
+          folderPath: [...state.folderPath, action.payload],
+        }
+
+        case DELETE_FROM_FOLDER_PATH:
+          console.log("REDUCER: DELETE_FROM_FOLDER_PATH action.payload: ", action.payload);
+          return {
+            ...state,
+            folderPath: [...state.folderPath].slice(0,-1),
+          }
+
     default:
       return state;
   }
@@ -83,4 +100,14 @@ export const pushToStack = (dir) => ({
 export const deleteFileAction = (dirId) => ({
   type: DELETE_FILE,
   payload: dirId,
+});
+
+export const pushToFolderPath = (dirName) => ({
+  type: PUSH_TO_FOLDER_PATH,
+  payload: dirName,
+});
+
+export const deleteFromFolderPath = () => ({
+  type: DELETE_FROM_FOLDER_PATH,
+  payload: null,
 });

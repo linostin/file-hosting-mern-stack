@@ -3,20 +3,13 @@ import * as S from "./styled";
 
 import Breadcrumbs from "../Breadcrumbs";
 
-const data = [
-  { text: "Все файлы" },
-  { text: "Недавно измененные" },
-  { text: "Фото" },
-  { text: "Расшаренные" },
-  { text: "Корзина" },
-];
+const FolderNamePath = (props) => {
 
-const dataList = ["tes", "asfd", "af", "af", "asfasf"];
+  const { data } = props;
 
-const FolderNamePath = () => {
   return (
     <S.FolderNamePathContainer>
-      <Breadcrumbs data={dataList}/>
+      <Breadcrumbs pinnedFirstItem="Home" data={data}/>
     </S.FolderNamePathContainer>
   );
 };
