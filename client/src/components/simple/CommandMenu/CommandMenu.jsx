@@ -68,7 +68,7 @@ const CommandMenu = (props) => {
             <S.ButtonCommandMenu
               label="Modal"
               startIcon={<OpenInNewIcon />}
-              onClick={modalHandler}
+              onClick={() => modalHandler(true)}
             />
             {/* <Dropdown
               label="Upload"

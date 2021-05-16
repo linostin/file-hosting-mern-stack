@@ -12,7 +12,7 @@ import FolderNamePath from "../../components/simple/FolderNamePath";
 import DataTable from "../../components/smart/DataTable/DataTable";
 import GridView from "../../components/smart/GridView/GridView";
 import Loader from "../../components/simple/Loader";
-import Modal from "../../components/simple/Modal";
+import DialogForm from '../../components/simple/DialogForm'
 import { people, propertyNames } from "../../data/testDataForPagination";
 
 const FilesPage = (props) => {
@@ -83,7 +83,14 @@ const FilesPage = (props) => {
           )}
         </S.RightSideContent>
       )}
-      {isModal && <Modal />}
+
+      <DialogForm
+        isModal={isModal}
+        title="Modal Title"
+        footer={<button>Cancel</button>}
+        modalHandler={modalHandler}
+        createFolderHandler={createFolderHandler}
+      />
     </>
   );
 };

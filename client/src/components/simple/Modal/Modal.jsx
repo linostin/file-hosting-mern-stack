@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as S from "./styled";
 
-const Modal = () => {
-  return (
-    <S.ModalContainer>
-      <S.Dialog>
+const Modal = (props) => {
+  const { isVisible = false, title, content, footer, onClose } = props;
+
+  const keydownHandler = ({ key }) => {
+    switch (key) {
+      case 'Escape':
+        onClose();
+        break;
+      default:
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', keydownHandler);
+    return () => document.removeEventListener('keydown', keydownHandler);
+  })
+
+  return isVisible ? (
+    <S.ModalContainer onClick={onClose}>
+      <S.Dialog onClick={e => e.stopPropagation()}>
         <S.Header>
-          <S.Title></S.Title>
+          <S.Title>{title}</S.Title>
+          <span className="modal-close" onClick={onClose}>
+            &times;
+          </span>
         </S.Header>
         <S.Body>
-          <S.Content>
-
-          </S.Content>
+          <S.Content>{content}</S.Content>
         </S.Body>
-        <S.Footer></S.Footer>
+        {footer && <S.Footer>{footer}</S.Footer>}
       </S.Dialog>
     </S.ModalContainer>
-  );
+  ) : null;
 };
 
 export default Modal;

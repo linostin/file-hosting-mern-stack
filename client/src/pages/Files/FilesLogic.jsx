@@ -22,27 +22,28 @@ const FilesLogic = () => {
   const [openFolder, setOpenFolder] = useState();
   const [isModal, setModal] = React.useState(false);
   // test 
-  const [folderName, setFolderName] = useState();
+  const [folderNamePath, setFolderNamePath] = useState([]);
 
   // selectors
   const currentDir = useSelector((state) => state.files.currentDir);
   const filesList = useSelector((state) => state.files.files);
   const dirStack = useSelector((state) => state.files.dirStack);
   const loader = useSelector((state) => state.app.loader);
+  console.log("dirStack", dirStack)
 
   useEffect(() => {
     dispatch(getFiles(currentDir, sort));
   }, [currentDir, sort]);
 
   // console.log(filesList);
-  console.log(currentDir);
+  // console.log(currentDir);
   // console.log(loader);
 
   // handlers
 
-  const modalHandler = () => {
+  const modalHandler = (value) => {
     console.log("Modal Func");
-    setModal(true);
+    setModal(value);
   }
 
 
@@ -64,7 +65,8 @@ const FilesLogic = () => {
       dispatch(setCurrentDir(id));
       setOpenFolder(true);
       setActiveFolder(false);
-      setFolderName(name)
+      setFolderNamePath(name)
+      console.log("folderNamePath", folderNamePath)
     }
   };
 
