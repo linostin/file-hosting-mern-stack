@@ -11,7 +11,7 @@ import * as S from "./styled";
 
 const DataTable = (props) => {
   const {
-    people,
+    data,
     propertyNames,
     selectionType,
     stripedRows,
@@ -22,6 +22,7 @@ const DataTable = (props) => {
     title,
     showHeader,
     dense,
+    openFolderHandler,
   } = props;
 
   const [tableData, setTableData] = useState([]);
@@ -31,12 +32,13 @@ const DataTable = (props) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let filteredData = people.map((v) =>
-      Object.keys(v)
-        .filter((k) => propertyNames.includes(k))
-        .reduce((acc, key) => ((acc[key] = v[key]), acc), {})
-    );
-    setTableData(filteredData);
+    // let filteredData = data.map((v) =>
+    //   Object.keys(v)
+    //     .filter((k) => propertyNames.includes(k))
+    //     .reduce((acc, key) => ((acc[key] = v[key]), acc), {})
+    // );
+    // setTableData(filteredData);
+    setTableData(data);
   }, []);
 
   console.log("tableData", tableData);
@@ -59,9 +61,10 @@ const DataTable = (props) => {
   // * Table Rows
   // ? naming
 
-  const selectRow = (val, i) => {
-    console.log("selected row", val, i);
+  const selectRow = (event, element, i) => {
+    console.log("selected row", element, i);
     setSelectedRow(i);
+    openFolderHandler(event, element._id, element.type, element.name)
   };
 
   // * Table
@@ -73,11 +76,11 @@ const DataTable = (props) => {
       ) : (
         <TableContainer>
           {showHeader && <TableHeader title={title}/>}
-          <Toolbar stickyHeader={stickyHeader}>
+          {/* <Toolbar stickyHeader={stickyHeader}>
             
             <SearchInput />
             
-          </Toolbar>
+          </Toolbar> */}
           <TableStyled>
             {/* <TableCaption /> */}
             <TableHead
@@ -98,6 +101,7 @@ const DataTable = (props) => {
               selectedRow={selectedRow}
               selectableRows={selectableRows}
               dense={dense}
+              openFolderHandler={openFolderHandler}
             />
           </TableStyled>
         </TableContainer>

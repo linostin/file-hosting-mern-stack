@@ -14,6 +14,7 @@ import PublishIcon from "@material-ui/icons/Publish";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 import Button from "../../ui/Button";
 import Toolbar from "../Toolbar";
@@ -26,12 +27,18 @@ const listDataUploadDropdown = [
 ];
 
 const listDataSortDropdown = [
-  { text: "Все файлы" },
-  { text: "Недавно измененные" },
+  { text: "По имени" },
+  { text: "По типу" },
+  { text: "По дате" },
 ];
 
+const listDataViewDropdown = [
+  {text: "Список"},  
+  {text: "Сетка"},   
+]
+
 const CommandMenu = (props) => {
-  const { modalHandler, goBackFolderHandler } = props;
+  const { modalHandler, goBackFolderHandler, sortTypeHandler, viewTypeHandler } = props;
 
   const selected = false;
 
@@ -74,8 +81,8 @@ const CommandMenu = (props) => {
             <Dropdown
               button={
                 <S.ButtonCommandMenu
-                  label="New Folder"
-                  startIcon={<CreateNewFolderIcon />}
+                  label="Upload"
+                  startIcon={<PublishIcon />}
                 />
               }
             >
@@ -88,9 +95,16 @@ const CommandMenu = (props) => {
                 <S.ButtonCommandMenu label="Sort" startIcon={<SortIcon />} />
               }
             >
-              <List data={listDataUploadDropdown} />
+              <List data={listDataSortDropdown} selectedListNameHandler={sortTypeHandler}/>
             </Dropdown>
-            <S.ButtonCommandMenu label="View" startIcon={<ViewModuleIcon />} />
+            <Dropdown
+              button={
+                <S.ButtonCommandMenu label="View" startIcon={<ViewModuleIcon />} />
+              }
+            >
+              <List data={listDataViewDropdown} selectedListNameHandler={viewTypeHandler}/>
+            </Dropdown>
+            <S.ButtonCommandMenu label="Info" startIcon={<InfoOutlinedIcon />} />
           </S.ButtonGroupWrapper>
         </Toolbar>
       )}

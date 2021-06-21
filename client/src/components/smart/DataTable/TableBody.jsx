@@ -3,6 +3,8 @@ import * as S from "./styled";
 
 import Checkbox from "../../ui/Checkbox";
 import Radio from "../../ui/Radio";
+import FolderIcon from "@material-ui/icons/Folder";
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
 const TableBody = (props) => {
   const {
@@ -16,6 +18,7 @@ const TableBody = (props) => {
     pointerOnHover,
     selectableRows,
     dense,
+    openFolderHandler,
   } = props;
 
   const getSelectionType = (selectionType) => {
@@ -31,7 +34,7 @@ const TableBody = (props) => {
 
   return (
     <S.TableBody>
-      {filteredData.map((val, i) => (
+      {filteredData.map((element, i) => (
         <S.TableRow
           key={`i_${i}`}
           stripedRows={stripedRows}
@@ -39,11 +42,25 @@ const TableBody = (props) => {
           hoverRow={hoverRow}
           pointerOnHover={pointerOnHover}
           dense={dense}
-          onClick={() => selectRow(val, i)}
+          onClick={(event) => selectRow(event, element, i)}
         >
           <S.TableCell>{getSelectionType(selectionType)}</S.TableCell>
-          {propertyNames.map((p) => (
-            <S.TableCell key={`i_${i}_${p}`}>{val[p]}</S.TableCell>
+          {propertyNames.map((property) => (
+            <S.TableCell key={`i_${i}_${property}`}>
+              {element[property] === element.type ? (
+                element[property] === "dir" ? (
+                  <FolderIcon
+                    style={{ fontSize: 25, color: "rgba(0, 0, 0, 0.54)" }}
+                  />
+                ) : (
+                  <InsertDriveFileIcon
+                    style={{ fontSize: 25, color: "rgba(0, 0, 0, 0.54)" }}
+                  />
+                )
+              ) : (
+                element[property]
+              )}
+            </S.TableCell>
           ))}
         </S.TableRow>
       ))}

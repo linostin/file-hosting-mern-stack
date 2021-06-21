@@ -14,6 +14,7 @@ const GridView = (props) => {
     activeFolder,
     activeFolderHandler,
     openFolderHandler,
+    itemsSelectHandler
   } = props;
 
   if (data.length === 0) {
@@ -34,6 +35,7 @@ const GridView = (props) => {
             active={element._id === activeFolder ? true : false}
           >
             <S.GridViewCheckbox
+              onClick={() => itemsSelectHandler(element._id)}
               active={element._id === activeFolder ? true : false}
             >
               {/* <Checkbox

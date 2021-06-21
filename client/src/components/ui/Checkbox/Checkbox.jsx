@@ -16,6 +16,7 @@ const Checkbox = (props) => {
   const handleChackboxChange = (event) => {
     setCheckedCheckbox(event.target.checked)
     console.log(event.target.checked)
+    console.log(event)
   }
 
   if (label) {
@@ -36,8 +37,11 @@ const Checkbox = (props) => {
 
   return (
     <S.Checkbox>
-      <S.HiddenCheckbox checked={true} />
-      <S.StyledCheckbox checked={true}>
+      <S.HiddenCheckbox
+       onClick={(event)=>handleChackboxChange(event)}
+       checked={true} />
+      <S.StyledCheckbox
+       checked={false}>
         <S.Icon viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12" />
         </S.Icon>

@@ -36,9 +36,15 @@ export const StyledCheckbox = styled.div`
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: ${(props) => (props.checked ? "salmon" : "papayawhip")};
+  background: ${(props) => (props.checked ? "salmon" : "salmon")};
+  background: "salmon";
   border-radius: 3px;
   transition: all 150ms;
+
+  &:hover ${Icon} {
+    visibility: visible;
+  }
+
   ${HiddenCheckbox}:focus + & {
     box-shadow: 0 0 0 3px pink;
   }

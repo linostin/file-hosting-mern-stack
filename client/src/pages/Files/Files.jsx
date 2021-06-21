@@ -13,7 +13,8 @@ import DataTable from "../../components/smart/DataTable/DataTable";
 import GridView from "../../components/smart/GridView/GridView";
 import Loader from "../../components/simple/Loader";
 import DialogForm from '../../components/simple/DialogForm'
-import { people, propertyNames } from "../../data/testDataForPagination";
+
+const propertyNames = ["type", "name", "date", "size"];
 
 const FilesPage = (props) => {
   const {
@@ -35,12 +36,13 @@ const FilesPage = (props) => {
     fileDeleteHandler,
     itemsSelectHandler,
     viewTypeHandler,
+    sortTypeHandler,
   } = props;
-
-  let gridOn = true;
 
   // let loading = loader;
   let loading = loader;
+
+  console.log("DATA", data)
 
   return (
     <>
@@ -58,18 +60,21 @@ const FilesPage = (props) => {
             startIcon={<PhotoIcon />}
             modalHandler={modalHandler}
             goBackFolderHandler={goBackFolderHandler}
+            sortTypeHandler={sortTypeHandler}
+            viewTypeHandler={viewTypeHandler}
           />
           <FolderNamePath data={folderPath}/>
-          {gridOn ? (
+          {viewType === "grid" ? (
             <GridView
               data={data}
               activeFolder={activeFolder}
               activeFolderHandler={activeFolderHandler}
               openFolderHandler={openFolderHandler}
+              itemsSelectHandler={itemsSelectHandler}
             />
           ) : (
             <DataTable
-              people={people}
+              data={data}
               propertyNames={propertyNames}
               selectionType="checkbox"
               // stripedRows
@@ -80,6 +85,7 @@ const FilesPage = (props) => {
               // showHeader
               // title="Table Title"
               dense
+              openFolderHandler={openFolderHandler}
             />
           )}
         </S.RightSideContent>

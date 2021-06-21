@@ -7,7 +7,12 @@ import {
   downloadFile,
   deleteFile,
 } from "../../actions/file";
-import { setCurrentDir, pushToStack, pushToFolderPath, deleteFromFolderPath } from "../../reducers/fileReducer";
+import {
+  setCurrentDir,
+  pushToStack,
+  pushToFolderPath,
+  deleteFromFolderPath,
+} from "../../reducers/fileReducer";
 
 // import components
 import FilesPage from "./Files";
@@ -15,22 +20,22 @@ import FilesPage from "./Files";
 const FilesLogic = () => {
   const dispatch = useDispatch();
 
-  const [viewType, setViewType] = useState();
-  const [sort, setSort] = useState("type");
-  const [itemsSelected, setItemsSelected] = useState();
+  const [viewType, setViewType] = useState("list");
+  const [sort, setSort] = useState("date");
+  const [itemsSelected, setItemsSelected] = useState([]);
   const [activeFolder, setActiveFolder] = useState();
   const [openFolder, setOpenFolder] = useState();
   const [isModal, setModal] = React.useState(false);
-  // test 
-  const [folderNamePath, setFolderNamePath] = useState([]);
+  // test
+  const [sortTest, setSortTest] = useState();
 
   // selectors
   const currentDir = useSelector((state) => state.files.currentDir);
   const filesList = useSelector((state) => state.files.files);
   const dirStack = useSelector((state) => state.files.dirStack);
-  const folderPath = useSelector((state) => state.files.folderPath)
+  const folderPath = useSelector((state) => state.files.folderPath);
   const loader = useSelector((state) => state.app.loader);
-  console.log("dirStack", dirStack)
+  console.log("dirStack", dirStack);
 
   useEffect(() => {
     dispatch(getFiles(currentDir, sort));
@@ -45,8 +50,7 @@ const FilesLogic = () => {
   const modalHandler = (value) => {
     console.log("Modal Func");
     setModal(value);
-  }
-
+  };
 
   const activeFolderHandler = (id) => {
     console.log("Active Folder Func");
@@ -95,12 +99,54 @@ const FilesLogic = () => {
     console.log("File Delete Func");
   };
 
-  const itemsSelectHandler = () => {
-    console.log("Items Select Func");
+  const itemsSelectHandler = (value) => {
+    console.log("Items Select Func", itemsSelected);
+    debugger
+    if (itemsSelected.length > 0) {
+      let rowArray
+      itemsSelected.forEach((element) => {
+        if (element === value) {
+          rowArray = itemsSelected.filter((item) => item !== element)
+        }
+        rowArray = [...itemsSelected, value]
+        setItemsSelected(rowArray)
+      })
+    }  
+
+    setItemsSelected(value)
   };
 
-  const viewTypeHandler = () => {
-    console.log("Files View");
+  const viewTypeHandler = (type) => {
+    console.log("Files View Func", type);
+    switch (type) {
+      case "Список":
+        setViewType("list");
+        break;
+      case "Сетка":
+        setViewType("grid");
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const sortTypeHandler = (type) => {
+    console.log("Sort Type Func: ", type);
+    switch (type) {
+      case "По имени":
+        setSort("name");
+        break;
+      case "По дате":
+        setSort("date");
+        break;
+      case "По типу":
+        setSort("type");
+        break;
+
+      default:
+        break;
+    }
   };
 
   return (
@@ -123,6 +169,7 @@ const FilesLogic = () => {
       fileDeleteHandler={fileDeleteHandler}
       itemsSelectHandler={itemsSelectHandler}
       viewTypeHandler={viewTypeHandler}
+      sortTypeHandler={sortTypeHandler}
     />
   );
 };
