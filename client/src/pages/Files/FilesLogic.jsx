@@ -101,19 +101,13 @@ const FilesLogic = () => {
 
   const itemsSelectHandler = (value) => {
     console.log("Items Select Func", itemsSelected);
-    debugger
-    if (itemsSelected.length > 0) {
-      let rowArray
-      itemsSelected.forEach((element) => {
-        if (element === value) {
-          rowArray = itemsSelected.filter((item) => item !== element)
-        }
-        rowArray = [...itemsSelected, value]
-        setItemsSelected(rowArray)
-      })
-    }  
-
-    setItemsSelected(value)
+    let transformedArray = [];
+    if (!itemsSelected.includes(value)) {
+      transformedArray = [...itemsSelected, value];
+    } else {
+      transformedArray = itemsSelected.filter((item) => item !== value);
+    }
+    setItemsSelected([...transformedArray]);
   };
 
   const viewTypeHandler = (type) => {
