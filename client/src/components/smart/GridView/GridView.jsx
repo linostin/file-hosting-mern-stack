@@ -6,7 +6,7 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import Typography from "@material-ui/core/Typography";
 import Checkbox from "@material-ui/core/Checkbox";
 
-import CheckboxNew from '../../ui/Checkbox'
+import CheckboxNew from "../../ui/Checkbox";
 
 const GridView = (props) => {
   const {
@@ -14,8 +14,15 @@ const GridView = (props) => {
     activeFolder,
     activeFolderHandler,
     openFolderHandler,
-    itemsSelectHandler
+    itemsSelectHandler,
+    itemsSelected,
   } = props;
+
+  // 3 way onClick
+  // first: click on Checkbox => select folder, add element._id to itemsSelected
+  // second: click on ElementWrapper => select folder
+  // third: click on FolderIcon => open folder? set activeFolder
+
 
   if (data.length === 0) {
     return (
@@ -31,23 +38,28 @@ const GridView = (props) => {
         return (
           <S.GridViewGridElementWrapper
             key={element._id}
-            onClick={() => activeFolderHandler(element._id)}
-            active={element._id === activeFolder ? true : false}
+            onClick={() => itemsSelectHandler(element._id)}
+            active={itemsSelected.includes(element._id)}
           >
             <S.GridViewCheckbox
               onClick={() => itemsSelectHandler(element._id)}
-              active={element._id === activeFolder ? true : false}
+              active={itemsSelected.includes(element._id)}
             >
               {/* <Checkbox
                 size="small"
                 onClick={() => activeFolderHandler(element._id)}
                 checked={element._id === activeFolder ? true : false}
               /> */}
-              <CheckboxNew/>
+              <CheckboxNew />
             </S.GridViewCheckbox>
             <S.GridViewGridFolderIcon
               onClick={(event) =>
-                openFolderHandler(event, element._id, element.type, element.name)
+                openFolderHandler(
+                  event,
+                  element._id,
+                  element.type,
+                  element.name
+                )
               }
             >
               {element.type === "dir" ? (

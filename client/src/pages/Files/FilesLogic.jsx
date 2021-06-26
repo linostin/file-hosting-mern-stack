@@ -99,7 +99,7 @@ const FilesLogic = () => {
     console.log("File Delete Func");
   };
 
-  const itemsSelectHandler = (value) => {
+  const itemsSelectHandler = (value, clearAll) => {
     console.log("Items Select Func", itemsSelected);
     let transformedArray = [];
     if (!itemsSelected.includes(value)) {

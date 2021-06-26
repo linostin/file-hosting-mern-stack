@@ -62,6 +62,7 @@ const FilesPage = (props) => {
             goBackFolderHandler={goBackFolderHandler}
             sortTypeHandler={sortTypeHandler}
             viewTypeHandler={viewTypeHandler}
+            itemsSelected={itemsSelected}
           />
           <FolderNamePath data={folderPath}/>
           {viewType === "grid" ? (
@@ -71,6 +72,7 @@ const FilesPage = (props) => {
               activeFolderHandler={activeFolderHandler}
               openFolderHandler={openFolderHandler}
               itemsSelectHandler={itemsSelectHandler}
+              itemsSelected={itemsSelected}
             />
           ) : (
             <DataTable

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as S from "./styled";
 
 import GetAppIcon from "@material-ui/icons/GetApp";
@@ -14,7 +14,7 @@ import PublishIcon from "@material-ui/icons/Publish";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import OpenInNewIcon from "@material-ui/icons/OpenInNew";
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 
 import Button from "../../ui/Button";
 import Toolbar from "../Toolbar";
@@ -32,15 +32,28 @@ const listDataSortDropdown = [
   { text: "По дате" },
 ];
 
-const listDataViewDropdown = [
-  {text: "Список"},  
-  {text: "Сетка"},   
-]
+const listDataViewDropdown = [{ text: "Список" }, { text: "Сетка" }];
 
 const CommandMenu = (props) => {
-  const { modalHandler, goBackFolderHandler, sortTypeHandler, viewTypeHandler } = props;
+  const {
+    modalHandler,
+    goBackFolderHandler,
+    sortTypeHandler,
+    viewTypeHandler,
+    itemsSelected,
+  } = props;
 
-  const selected = false;
+  const [selected, setSelected] = useState();
+  const [numbersOfSelected, setNumbersOfSelected] = useState();
+
+  useEffect(() => {
+    if (itemsSelected.length > 0) {
+      setSelected(true);
+      setNumbersOfSelected(itemsSelected.length);
+    } else {
+      setSelected(false);
+    }
+  }, [itemsSelected]);
 
   const tetsButtonClick = () => {
     console.log("Test Button Click");
@@ -62,7 +75,10 @@ const CommandMenu = (props) => {
             <S.ButtonCommandMenu label="Rename" startIcon={<EditIcon />} />
           </S.ButtonGroupWrapper>
           <S.ButtonGroupWrapper>
-            <S.ButtonCommandMenu label="Selected" endIcon={<CloseIcon />} />
+            <S.ButtonCommandMenu
+              label={`${numbersOfSelected} Selected`}
+              endIcon={<CloseIcon />}
+            />
           </S.ButtonGroupWrapper>
         </Toolbar>
       ) : (
@@ -95,16 +111,28 @@ const CommandMenu = (props) => {
                 <S.ButtonCommandMenu label="Sort" startIcon={<SortIcon />} />
               }
             >
-              <List data={listDataSortDropdown} selectedListNameHandler={sortTypeHandler}/>
+              <List
+                data={listDataSortDropdown}
+                selectedListNameHandler={sortTypeHandler}
+              />
             </Dropdown>
             <Dropdown
               button={
-                <S.ButtonCommandMenu label="View" startIcon={<ViewModuleIcon />} />
+                <S.ButtonCommandMenu
+                  label="View"
+                  startIcon={<ViewModuleIcon />}
+                />
               }
             >
-              <List data={listDataViewDropdown} selectedListNameHandler={viewTypeHandler}/>
+              <List
+                data={listDataViewDropdown}
+                selectedListNameHandler={viewTypeHandler}
+              />
             </Dropdown>
-            <S.ButtonCommandMenu label="Info" startIcon={<InfoOutlinedIcon />} />
+            <S.ButtonCommandMenu
+              label="Info"
+              startIcon={<InfoOutlinedIcon />}
+            />
           </S.ButtonGroupWrapper>
         </Toolbar>
       )}
