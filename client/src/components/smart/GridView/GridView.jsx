@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import * as S from "./styled";
 
 import FolderIcon from "@material-ui/icons/Folder";
@@ -16,6 +16,7 @@ const GridView = (props) => {
     openFolderHandler,
     itemsSelectHandler,
     itemsSelected,
+    itemsSelectResetHandler,
   } = props;
 
   // 3 way onClick
@@ -23,6 +24,34 @@ const GridView = (props) => {
   // second: click on ElementWrapper => select folder
   // third: click on FolderIcon => open folder? set activeFolder
 
+  const [gridSelectedItems, setGridSelectedItems] = useState([]);
+
+  useEffect(() => {
+    setGridSelectedItems([...itemsSelected]);
+  }, [itemsSelected]);
+
+  const checkboxOnClickHandler = (event, id) => {
+    event.stopPropagation();
+    itemsSelectHandler(id);
+  };
+
+  const elementWrapperOnClickHandler = (id) => {
+    debugger;
+    if (itemsSelected.length > 0) {
+      itemsSelectResetHandler();
+    }
+
+    if (!gridSelectedItems.includes(id)) {
+      setGridSelectedItems([id]);
+    } else {
+      setGridSelectedItems([]);
+    }
+  };
+
+  const folderIconOnClickHandler = (event, id, type, name) => {
+    event.stopPropagation();
+    openFolderHandler(event, id, type, name);
+  };
 
   if (data.length === 0) {
     return (
@@ -38,23 +67,23 @@ const GridView = (props) => {
         return (
           <S.GridViewGridElementWrapper
             key={element._id}
-            onClick={() => itemsSelectHandler(element._id)}
-            active={itemsSelected.includes(element._id)}
+            onClick={() => elementWrapperOnClickHandler(element._id)}
+            active={gridSelectedItems.includes(element._id)}
           >
             <S.GridViewCheckbox
-              onClick={() => itemsSelectHandler(element._id)}
-              active={itemsSelected.includes(element._id)}
+              onClick={(event) => checkboxOnClickHandler(event, element._id)}
+              checked={gridSelectedItems.includes(element._id)}
             >
               {/* <Checkbox
                 size="small"
                 onClick={() => activeFolderHandler(element._id)}
                 checked={element._id === activeFolder ? true : false}
               /> */}
-              <CheckboxNew />
+              <CheckboxNew checked={gridSelectedItems.includes(element._id)} />
             </S.GridViewCheckbox>
             <S.GridViewGridFolderIcon
               onClick={(event) =>
-                openFolderHandler(
+                folderIconOnClickHandler(
                   event,
                   element._id,
                   element.type,

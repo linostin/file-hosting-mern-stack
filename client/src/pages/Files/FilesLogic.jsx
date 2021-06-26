@@ -99,7 +99,7 @@ const FilesLogic = () => {
     console.log("File Delete Func");
   };
 
-  const itemsSelectHandler = (value, clearAll) => {
+  const itemsSelectHandler = (value) => {
     console.log("Items Select Func", itemsSelected);
     let transformedArray = [];
     if (!itemsSelected.includes(value)) {
@@ -109,6 +109,11 @@ const FilesLogic = () => {
     }
     setItemsSelected([...transformedArray]);
   };
+
+  const itemsSelectResetHandler = () => {
+    setItemsSelected([])
+  }
+  
 
   const viewTypeHandler = (type) => {
     console.log("Files View Func", type);
@@ -162,6 +167,7 @@ const FilesLogic = () => {
       fileDownloadHandler={fileDownloadHandler}
       fileDeleteHandler={fileDeleteHandler}
       itemsSelectHandler={itemsSelectHandler}
+      itemsSelectResetHandler={itemsSelectResetHandler}
       viewTypeHandler={viewTypeHandler}
       sortTypeHandler={sortTypeHandler}
     />

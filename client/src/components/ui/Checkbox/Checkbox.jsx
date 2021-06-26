@@ -23,8 +23,8 @@ const Checkbox = (props) => {
     return (
       <S.CheckboxContainer>
         <S.Checkbox>
-          <S.HiddenCheckbox checked={true}/>
-          <S.StyledCheckbox checked={true}>
+          <S.HiddenCheckbox checked={checked}/>
+          <S.StyledCheckbox checked={checked}>
             <S.Icon viewBox="0 0 24 24">
               <polyline points="20 6 9 17 4 12" />
             </S.Icon>
@@ -39,9 +39,9 @@ const Checkbox = (props) => {
     <S.Checkbox>
       <S.HiddenCheckbox
        onClick={(event)=>handleChackboxChange(event)}
-       checked={true} />
+       checked={checked} />
       <S.StyledCheckbox
-       checked={false}>
+       checked={checked}>
         <S.Icon viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12" />
         </S.Icon>

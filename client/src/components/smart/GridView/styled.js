@@ -17,7 +17,7 @@ export const GridViewCheckbox = styled.div`
   top: 5px;
   margin: 0;
   padding: 0;
-  display: ${(props) => (props.active ? "block" : "none")};
+  display: ${(props) => (props.checked ? "block" : "none")};
 `;
 
 export const GridViewGridElementWrapper = styled.div`

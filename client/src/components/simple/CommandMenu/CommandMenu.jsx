@@ -41,6 +41,7 @@ const CommandMenu = (props) => {
     sortTypeHandler,
     viewTypeHandler,
     itemsSelected,
+    itemsSelectResetHandler
   } = props;
 
   const [selected, setSelected] = useState();
@@ -78,6 +79,7 @@ const CommandMenu = (props) => {
             <S.ButtonCommandMenu
               label={`${numbersOfSelected} Selected`}
               endIcon={<CloseIcon />}
+              onClick={itemsSelectResetHandler}
             />
           </S.ButtonGroupWrapper>
         </Toolbar>
