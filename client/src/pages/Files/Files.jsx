@@ -91,6 +91,7 @@ const FilesPage = (props) => {
               // title="Table Title"
               dense
               openFolderHandler={openFolderHandler}
+              itemsSelectHandler={itemsSelectHandler}
             />
           )}
         </S.RightSideContent>

@@ -5,39 +5,37 @@ export const TableContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 100%;
+  width: 100%;
+  padding-left: 32px;
+  padding-right: 32px;
 `;
 
 export const TableStyled = styled.table`
-  /* border-collapse: separate; */
-  table-layout: fixed;
+  border-collapse: collapse;
   width: 100%;
-  height: 100%;
-  /* max-width: 100%; */
+  border-spacing: 0px; /* Расстояние между ячейками */
 `;
 
 // * Table Header Title
 export const TableHeader = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: flex-start;
-align-items: center;
-width: 100%;
-border: 1px solid #ddd;
-padding: 20px 10px 20px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 20px 10px 20px 10px;
 `;
 
 // * Table Head
 
 export const TableHead = styled.thead``;
 
-export const TableHeadRow = styled.tr`
-  border-bottom: 1px solid #ddd;
-`;
+export const TableHeadRow = styled.tr``;
 
 export const TableHeadCell = styled.th`
-  text-align: right; /* Left-align text */
-  padding: 12px; /* Add padding */
+  text-align: right;
+  padding: 5px; /* Add padding */
   /* &.something {
     top: 0;
     left: 0;
@@ -86,8 +84,7 @@ export const TableHeadLabelText = styled.div`
 export const TableBody = styled.tbody``;
 
 export const TableRow = styled.tr`
-  width: 100%;
-  min-height: 48px;
+  height: 48px;
   background: ${(props) => props.selectedRow && "#eee"};
   &:nth-child(odd) {
     background: ${(props) => props.stripedRows && "#eee"};
@@ -110,6 +107,14 @@ export const TableRow = styled.tr`
 `;
 
 export const TableCell = styled.td`
-  text-align: right; /* Left-align text */
+  text-align: ${(props) => props.align === "left" ? "left" : "right"};
   border-bottom: 1px solid rgba(224, 224, 224, 1);
+  padding: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+export const TableCellTextLink = styled.span`
+
 `;

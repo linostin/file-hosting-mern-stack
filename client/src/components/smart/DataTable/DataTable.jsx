@@ -23,6 +23,7 @@ const DataTable = (props) => {
     showHeader,
     dense,
     openFolderHandler,
+    itemsSelectHandler,
   } = props;
 
   const [tableData, setTableData] = useState([]);
@@ -64,7 +65,6 @@ const DataTable = (props) => {
   const selectRow = (event, element, i) => {
     console.log("selected row", element, i);
     setSelectedRow(i);
-    openFolderHandler(event, element._id, element.type, element.name)
   };
 
   // * Table
@@ -102,6 +102,7 @@ const DataTable = (props) => {
               selectableRows={selectableRows}
               dense={dense}
               openFolderHandler={openFolderHandler}
+              itemsSelectHandler={itemsSelectHandler}
             />
           </TableStyled>
         </TableContainer>

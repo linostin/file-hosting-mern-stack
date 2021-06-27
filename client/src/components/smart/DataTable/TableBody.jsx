@@ -19,9 +19,20 @@ const TableBody = (props) => {
     selectableRows,
     dense,
     openFolderHandler,
+    itemsSelectHandler,
   } = props;
 
-  const getSelectionType = (selectionType) => {
+  const checkboxOnClickHandler = (event, id) => {
+    event.stopPropagation();
+    itemsSelectHandler(id);
+  };
+
+  const tableCellTextonClickHandler = (event, id, type, name) => {
+    // event.stopPropagation();
+    openFolderHandler(event, id, type, name);
+  };
+
+  const getSelectionType = (selectionType, i) => {
     if (selectionType) {
       if (selectionType === "checkbox") {
         return <Checkbox />;
@@ -44,7 +55,12 @@ const TableBody = (props) => {
           dense={dense}
           onClick={(event) => selectRow(event, element, i)}
         >
-          <S.TableCell>{getSelectionType(selectionType)}</S.TableCell>
+          <S.TableCell
+            onClick={(event) => checkboxOnClickHandler(event, i)}
+            align="left"
+          >
+            {getSelectionType(selectionType, i)}
+          </S.TableCell>
           {propertyNames.map((property) => (
             <S.TableCell key={`i_${i}_${property}`}>
               {element[property] === element.type ? (
@@ -57,6 +73,19 @@ const TableBody = (props) => {
                     style={{ fontSize: 25, color: "rgba(0, 0, 0, 0.54)" }}
                   />
                 )
+              ) : property === "name" ? (
+                <S.TableCellTextLink
+                  onClick={(event) =>
+                    tableCellTextonClickHandler(
+                      event,
+                      element._id,
+                      element.type,
+                      element.name
+                    )
+                  }
+                >
+                  {element[property]}
+                </S.TableCellTextLink>
               ) : (
                 element[property]
               )}

@@ -37,19 +37,20 @@ const GridView = (props) => {
 
   const elementWrapperOnClickHandler = (id) => {
     debugger;
-    if (itemsSelected.length > 0) {
-      itemsSelectResetHandler();
-    }
 
-    if (!gridSelectedItems.includes(id)) {
-      setGridSelectedItems([id]);
+    if (itemsSelected.includes(id)) {
+      itemsSelectResetHandler();
     } else {
-      setGridSelectedItems([]);
+      itemsSelectHandler(id);
+      // TODO: сделать адекватный селект
     }
   };
 
   const folderIconOnClickHandler = (event, id, type, name) => {
     event.stopPropagation();
+    if (itemsSelected.length > 0) {
+      itemsSelectResetHandler();
+    }
     openFolderHandler(event, id, type, name);
   };
 
